@@ -1,4 +1,4 @@
-import { IUser } from "@/interfaces/user.type";
+import { IUser } from "@/interfaces/profile.type";
 
 export type IProfileState = {
   profile: IUser | null;
@@ -6,10 +6,4 @@ export type IProfileState = {
   getProfile: () => Promise<void>;
   logoutProfile: () => Promise<void>;
   // putProfile: (newProfile: User) => void;
-};
-
-export type ITagState = {
-  tag: any
-  isLoading: boolean;
-  getTag: () => Promise<void>;
 };

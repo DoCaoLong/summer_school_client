@@ -102,7 +102,11 @@
     font-weight: 500;
     color: var(--primary-cl);
 }
-
+.header_btn_login{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 /* close hambuger */
 
 @media screen and (max-width: 767.98px) {
@@ -173,6 +177,7 @@
         z-index: 2;
         /* color: var(--primary-cl) */
     }
+
     .nav_submenu {
         display: none;
     }

@@ -8,6 +8,22 @@ const nextConfig = {
             "summerschool.fashional.pro",
         ],
     },
+    async rewrites() {
+        return [
+            {
+                source: "/danh-sach-khoa-hoc",
+                destination: "/course",
+            },
+            {
+                source: "/khoa-hoc/:id",
+                destination: "/course/:id",
+            },
+            // {
+            //     source: "/profile/:slug",
+            //     destination: "/profile/:slug",
+            // },
+        ];
+    },
     experimental: { esmExternals: true },
 };
 export default nextConfig;

@@ -40,11 +40,11 @@ export const axiosConfig = axios.create({
 //   return config;
 // });
 
-// axiosConfig.interceptors.request.use(async (config) => {
-//   // const token = Cookies.get("accessToken");
-//   // config.headers.Authorization = `Bearer ${token}`;
-//   // return config;
-// });
+axiosConfig.interceptors.request.use(async (config) => {
+    const token = localStorage.getItem("accessToken");
+    config.headers.Authorization = `${token}`;
+    return config;
+});
 
 axiosConfig.interceptors.response.use(
     (response) => {

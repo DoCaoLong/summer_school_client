@@ -1,29 +1,18 @@
-import { AxiosError, AxiosResponse } from "axios";
+import { IPagination } from "@/interfaces/page.type";
+import { AxiosResponse } from "axios";
 
 export interface AxiosCusError<D> extends AxiosResponse<D> {
-  response: {
-    data: D;
-  };
+    response: {
+        data: D;
+    };
 }
 export interface IResponseDetail<T> {
-  statusCode: number;
-  context: T;
+    attributes: T;
+    id: number;
 }
 export interface IResponseList<T> {
     data: T;
     meta: {
-        pagination: {
-            page: number;
-            pageSize: number;
-            pageCount: number;
-            total: number;
-        };
+        pagination: IPagination;
     };
-}
-
-export interface IResponseMessage {
-  statusCode: number;
-  context: {
-    message: string
-  };
 }

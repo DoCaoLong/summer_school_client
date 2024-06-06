@@ -10,6 +10,9 @@
     font-weight: bold;
     text-align: center;
 }
+.course_author_name {
+    font-weight: bold;
+}
 .course_desc {
     max-width: 700px;
     text-align: center;
@@ -30,6 +33,7 @@
     display: flex;
     align-items: center;
     background-color: var(--white);
+    cursor: pointer;
 }
 .course_item_left {
     width: 50%;
@@ -63,7 +67,7 @@
 .course_author {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 10px;
 }
 @media screen and (max-width: 767.98px) {
     .course_item {

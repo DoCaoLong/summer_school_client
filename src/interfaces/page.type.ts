@@ -1,4 +1,6 @@
-export interface IPage {
-  page?: string | number;
-  limit?: string | number;
+export interface IPagination {
+    page: number;
+    pageSize: number;
+    pageCount: number;
+    total: number;
 }

@@ -2,12 +2,21 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import style from "./style.module.css";
 import { FaChevronDown } from "react-icons/fa";
-import { useMediaQuery } from "@mui/material";
+import { Avatar, useMediaQuery } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
+import { QR_KEY, QR_TIME_CACHE } from "@/constants";
+import { courseApi } from "@/services";
+import { ICourse } from "@/interfaces/course.type";
+import { useProfileStore } from "@/store/zustand";
+import { IProfileState } from "@/store/zustand/type";
 
 export default function Header() {
-    const IS_MB = useMediaQuery("(max-width:1023px)");
     const [isScrolled, setIsScrolled] = useState(false);
     const [isHomePage, setIsHomePage] = useState(false);
+    const [profile] = useProfileStore((state: IProfileState) => [
+        state.profile,
+    ]);
+
     function handleActiveHambuger() {
         document.body.classList.toggle(style.body_active);
     }
@@ -23,8 +32,10 @@ export default function Header() {
 
         window.addEventListener("scroll", handleScroll);
 
-        // Check if current path is the homepage on component mount
-        setIsHomePage(window.location.pathname === "/");
+        setIsHomePage(
+            window.location.pathname === "/" ||
+                window.location.pathname.split("/")[1] === "khoa-hoc"
+        );
 
         return () => {
             window.removeEventListener("scroll", handleScroll);
@@ -53,46 +64,102 @@ export default function Header() {
                     LOGO
                 </Link>
             </div>
-            <nav className={style.nav}>
-                <ul className={style.nav_ul}>
-                    <li
-                        onClick={() => handleActiveHambuger()}
-                        className={style.nav_li}
-                    >
-                        <Link href="/">Trang chủ</Link>
-                    </li>
-                    <li
-                        onClick={() => handleActiveHambuger()}
-                        className={style.nav_li}
-                    >
-                        <Link href={"course"}>
-                            Khoá học{" "}
-                            <FaChevronDown
-                                style={IS_MB ? { display: "none" } : {}}
-                                size={14}
-                            />
-                        </Link>
-                        <ul className={style.nav_submenu}>
-                            <li>
-                                <Link href="#">Khóa học Frontend Web</Link>
-                            </li>
-                            <li>
-                                <Link href="#">Khóa học Backend Nodejs</Link>
-                            </li>
-                            <li>
-                                <Link href="#">Khóa học Fullstack</Link>
-                            </li>
-                        </ul>
-                    </li>
-                    <li
-                        onClick={() => handleActiveHambuger()}
-                        className={style.nav_li}
-                    >
-                        <Link href="#">Bài viết</Link>
-                    </li>
-                </ul>
-            </nav>
-            <button className={style.header_btn_login}>Đăng nhập</button>
+            <HeaderNav handleActiveHambuger={handleActiveHambuger} />
+            {!profile ? (
+                <Link href={"/auth/login"} className={style.header_btn_login}>
+                    Đăng nhập
+                </Link>
+            ) : (
+                <Link
+                    href={"/profile/edit-profile"}
+                    className={style.header_btn_login}
+                >
+                    <Avatar
+                        alt={profile?.attributes?.username}
+                        sx={{backgroundColor: "var(--secondary-cl)", width: 36, height: 36 }}
+                        src="..."
+                        ></Avatar>
+                    <p>{profile?.attributes?.username}</p>
+                </Link>
+            )}
         </div>
     );
 }
+
+// export const getStaticProps: GetStaticProps<any> = async (
+//     context: GetStaticPropsContext
+// ) => {
+//     let course = [];
+//     try {
+//         const response = await axios
+//             .get(`${baseURL}/course`, {
+//                 params: {
+//                     populate: "image",
+//                 },
+//             })
+//             .then((res) => res?.data);
+//         course = response;
+//     } catch (error) {
+//         console.log(error);
+//     }
+//     return {
+//         props: { course },
+//         revalidate: 3600 * 24,
+//     };
+// };
+
+interface IProps {
+    handleActiveHambuger: () => void;
+}
+const HeaderNav = (props: IProps) => {
+    const { handleActiveHambuger } = props;
+    const IS_MB = useMediaQuery("(max-width:1023px)");
+    const params: { populate: string } = {
+        populate: "teacher, teacher.avatar, image",
+    };
+    const { data: course } = useQuery({
+        queryKey: [QR_KEY.COURSE],
+        queryFn: () => courseApi.getCourse({ params }),
+        staleTime: QR_TIME_CACHE,
+    });
+    const dataCourse = course?.data ?? [];
+    return (
+        <nav className={style.nav}>
+            <ul className={style.nav_ul}>
+                <li
+                    onClick={() => handleActiveHambuger()}
+                    className={style.nav_li}
+                >
+                    <Link href="/">Trang chủ</Link>
+                </li>
+                <li
+                    onClick={() => handleActiveHambuger()}
+                    className={style.nav_li}
+                >
+                    <Link href={"/danh-sach-khoa-hoc"}>
+                        Khoá học{" "}
+                        <FaChevronDown
+                            style={IS_MB ? { display: "none" } : {}}
+                            size={14}
+                        />
+                    </Link>
+                    <ul className={style.nav_submenu}>
+                        {dataCourse?.map((item: ICourse, index: number) => (
+                            <li key={item?.id}>
+                                <Link href={`/khoa-hoc/${item?.id}`}>
+                                    {item?.attributes?.name}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </li>
+                <li
+                    onClick={() => handleActiveHambuger()}
+                    className={style.nav_li}
+                >
+                    <Link href="#">Bài viết</Link>
+                </li>
+            </ul>
+        </nav>
+    );
+};

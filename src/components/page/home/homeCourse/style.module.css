@@ -61,11 +61,12 @@
 .course_author {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 10px;
 }
 .course_author_name {
     font-size: 18px;
     color: #000;
+    font-weight: 700;
 }
 .course_time {
     color: var(--text-gray);

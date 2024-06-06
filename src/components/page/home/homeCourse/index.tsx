@@ -9,6 +9,8 @@ import { useQuery } from "@tanstack/react-query";
 import { QR_KEY, QR_TIME_CACHE } from "@/constants";
 import { courseApi } from "@/services";
 import { ICourse } from "@/interfaces/course.type";
+import Link from "next/link";
+import dayjs from "dayjs";
 export default function HomeCourse() {
     const IS_MB = useMediaQuery("(max-width:1023px)");
     const slider = React.useRef<any>(null);
@@ -20,13 +22,13 @@ export default function HomeCourse() {
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 3000,
+        autoplaySpeed: 5000,
         nextArrow: IS_MB && <NextArrow slider={slider} />,
         prevArrow: IS_MB && <PrevArrow slider={slider} />,
     };
 
-    const params: any = {
-        populate: "image",
+    const params: { populate: string } = {
+        populate: "teacher, teacher.avatar, image",
     };
     const { data: course } = useQuery({
         queryKey: [QR_KEY.COURSE],
@@ -52,7 +54,7 @@ export default function HomeCourse() {
                 </div>
                 <Slider ref={slider} {...settings}>
                     {dataCourse?.map((item: ICourse, index: number) => (
-                        <div key={index}>
+                        <Link href={`/khoa-hoc/${item?.id}`} key={index}>
                             <div className={style.course_slider_item}>
                                 <div className={style.course_left}>
                                     <Image
@@ -79,8 +81,8 @@ export default function HomeCourse() {
                                             className={style.course_author_img}
                                         >
                                             <Avatar
-                                                alt="Remy Sharp"
-                                                src="https://source.unsplash.com/random"
+                                                alt="author"
+                                                src={`${baseUrl}${item?.attributes?.teacher?.data?.attributes?.avatar?.data?.attributes?.url}`}
                                                 sx={{
                                                     width: 48,
                                                     height: 48,
@@ -88,14 +90,19 @@ export default function HomeCourse() {
                                             />
                                         </div>
                                         <p className={style.course_author_name}>
-                                            Leesin
+                                            {
+                                                item?.attributes?.teacher?.data
+                                                    ?.attributes?.name
+                                            }
                                         </p>
                                     </div>
                                     <p className={style.course_txt}>
                                         Ngày khai giảng
                                     </p>
                                     <p className={style.course_time}>
-                                        17/10/2024
+                                        {dayjs(
+                                            item?.attributes?.startDate
+                                        ).format("DD-MM-YYYY") ?? 0}
                                     </p>
                                     <Button
                                         size="large"
@@ -107,7 +114,7 @@ export default function HomeCourse() {
                                     </Button>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </Slider>
             </div>
@@ -134,7 +141,11 @@ export default function HomeCourse() {
 
                 <div className={style.course_list}>
                     {dataCourse?.map((item: ICourse, index: number) => (
-                        <div key={index} className={style.course_item}>
+                        <Link
+                            href={`/khoa-hoc/${item?.id}`}
+                            key={index}
+                            className={style.course_item}
+                        >
                             <div className={style.course_item_left}>
                                 <Image
                                     fetchPriority="high"
@@ -160,8 +171,8 @@ export default function HomeCourse() {
                                             className={style.course_author_img}
                                         >
                                             <Avatar
-                                                alt="Remy Sharp"
-                                                src="https://source.unsplash.com/random"
+                                                alt="author"
+                                                src={`${baseUrl}${item?.attributes?.teacher?.data?.attributes?.avatar?.data?.attributes?.url}`}
                                                 sx={{
                                                     width: 36,
                                                     height: 36,
@@ -169,11 +180,16 @@ export default function HomeCourse() {
                                             />
                                         </div>
                                         <p className={style.course_author_name}>
-                                            Leesin
+                                            {
+                                                item?.attributes?.teacher?.data
+                                                    ?.attributes?.name
+                                            }
                                         </p>
                                     </div>
                                     <p className={style.course_time}>
-                                        17/10/2024
+                                        {dayjs(
+                                            item?.attributes?.startDate
+                                        ).format("DD-MM-YYYY") ?? 0}
                                     </p>
                                 </div>
                                 <Button
@@ -185,7 +201,7 @@ export default function HomeCourse() {
                                     Xem chi tiết
                                 </Button>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>

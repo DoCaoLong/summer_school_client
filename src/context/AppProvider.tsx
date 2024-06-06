@@ -1,7 +1,7 @@
-import { IUser } from "@/interfaces/user.type";
 import { IProfileState } from "@/store/zustand/type";
 import { useProfileStore } from "@/store/zustand";
 import { ReactNode, createContext, useEffect } from "react";
+import { IUser } from "@/interfaces/profile.type";
 
 export type AppContextType = {
   user: IUser | null;

@@ -7,12 +7,13 @@ import { courseApi } from "@/services";
 import { ICourse } from "@/interfaces/course.type";
 import Image from "next/image";
 import style from "./style.module.css";
+import Link from "next/link";
 
 const Course: NextPageWithLayout = () => {
     const baseUrl = process.env.NEXT_PUBLIC_URL;
     const IS_MB = useMediaQuery("(max-width:1023px)");
-    const params: any = {
-        populate: "image",
+    const params: { populate: string } = {
+        populate: "teacher, teacher.avatar, image",
     };
     const { data: course } = useQuery({
         queryKey: [QR_KEY.COURSE],
@@ -43,7 +44,11 @@ const Course: NextPageWithLayout = () => {
 
                 <div className={style.course_list}>
                     {dataCourse?.map((item: ICourse, index: number) => (
-                        <div key={index} className={style.course_item}>
+                        <Link
+                            href={`/khoa-hoc/${item?.id}`}
+                            key={index}
+                            className={style.course_item}
+                        >
                             <div className={style.course_item_left}>
                                 <Image
                                     fetchPriority="high"
@@ -70,7 +75,7 @@ const Course: NextPageWithLayout = () => {
                                         >
                                             <Avatar
                                                 alt="Remy Sharp"
-                                                src="https://source.unsplash.com/random"
+                                                src={`${baseUrl}${item?.attributes?.teacher?.data?.attributes?.avatar?.data?.attributes?.url}`}
                                                 sx={{
                                                     width: 36,
                                                     height: 36,
@@ -78,7 +83,10 @@ const Course: NextPageWithLayout = () => {
                                             />
                                         </div>
                                         <p className={style.course_author_name}>
-                                            Leesin
+                                            {
+                                                item?.attributes?.teacher?.data
+                                                    ?.attributes?.name
+                                            }
                                         </p>
                                     </div>
                                     <p className={style.course_time}>
@@ -94,7 +102,7 @@ const Course: NextPageWithLayout = () => {
                                     Xem chi tiết
                                 </Button>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>
