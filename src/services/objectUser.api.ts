@@ -1,20 +1,5 @@
 import { axiosConfig } from "@/configs";
-import {
-    ICourse,
-    IResponseDetail,
-    IResponseList,
-} from "@/interfaces/index.type";
-
-export interface IObjectUserApi {
-    id: number;
-    attributes: {
-        name: string;
-        createdAt: string;
-        updatedAt: string;
-        publishedAt: string;
-        uid: string | number | null;
-    };
-}
+import { IObjectUserApi, IResponseList } from "@/interfaces/index.type";
 
 export const objectUserApi = {
     getObjectUser: () => {

@@ -18,6 +18,14 @@ const nextConfig = {
                 source: "/khoa-hoc/:id",
                 destination: "/course/:id",
             },
+            {
+                source: "/bai-viet",
+                destination: "/blog",
+            },
+            {
+                source: "/bai-viet/:id",
+                destination: "/blog/:id",
+            },
             // {
             //     source: "/profile/:slug",
             //     destination: "/profile/:slug",

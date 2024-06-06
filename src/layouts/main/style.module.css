@@ -3,3 +3,8 @@
 }
 @media screen and (max-width: 1023.98px) {
 }
+@media screen and (max-width: 767.98px) {
+    .mainLayout {
+        padding: 50px 0;
+    }
+}

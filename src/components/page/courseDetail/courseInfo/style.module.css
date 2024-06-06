@@ -63,12 +63,48 @@
     font-size: 24px;
 }
 
+.dialogCourse {
+    padding: 10px 24px 24px 24px;
+    width: 400px;
+    border-top: 1px solid var(--secondary-cl);
+}
+
+.btn_dialog_submit {
+    margin-top: 24px;
+    text-align: center;
+}
+.formRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+.rowInput {
+    display: flex;
+    gap: 24px;
+    margin: 24px 0;
+}
+.know_test {
+    font-size: 14px;
+    color: var(--secondary-cl);
+    line-height: 1.5;
+}
 @media screen and (max-width: 767.98px) {
+    .know_test {
+        font-size: 12px;
+    }
+    .rowInput {
+        margin: 14px 0;
+        gap: 14px;
+    }
     .info_banner_content {
         gap: 24px;
         padding: 0 16px;
     }
     .info_banner_name {
         font-size: 32px;
+    }
+    .dialogCourse {
+        width: 100%;
     }
 }

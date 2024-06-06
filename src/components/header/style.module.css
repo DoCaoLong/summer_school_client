@@ -102,7 +102,7 @@
     font-weight: 500;
     color: var(--primary-cl);
 }
-.header_btn_login{
+.header_btn_login {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -110,6 +110,12 @@
 /* close hambuger */
 
 @media screen and (max-width: 767.98px) {
+    .header {
+        height: 50px;
+    }
+    .header_username {
+        font-size: 14px;
+    }
     /* hamburger */
     #hamburger {
         display: none;

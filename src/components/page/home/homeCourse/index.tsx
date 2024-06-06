@@ -53,69 +53,79 @@ export default function HomeCourse() {
                     )}
                 </div>
                 <Slider ref={slider} {...settings}>
-                    {dataCourse?.map((item: ICourse, index: number) => (
-                        <Link href={`/khoa-hoc/${item?.id}`} key={index}>
-                            <div className={style.course_slider_item}>
-                                <div className={style.course_left}>
-                                    <Image
-                                        fetchPriority="high"
-                                        width={0}
-                                        height={0}
-                                        sizes="100vw"
-                                        style={{
-                                            width: "100%",
-                                            height: "100%",
-                                        }}
-                                        src={`${baseUrl}${item?.attributes?.image?.data?.attributes?.url}`}
-                                        alt={`${item?.attributes?.image?.data?.attributes?.name}`}
-                                        priority={true}
-                                    />
-                                </div>
-                                <div className={style.course_right}>
-                                    <p className={style.course_txt}>Khóa học</p>
-                                    <h3 className={style.course_name}>
-                                        {item?.attributes?.name}
-                                    </h3>
-                                    <div className={style.course_author}>
-                                        <div
-                                            className={style.course_author_img}
-                                        >
-                                            <Avatar
-                                                alt="author"
-                                                src={`${baseUrl}${item?.attributes?.teacher?.data?.attributes?.avatar?.data?.attributes?.url}`}
-                                                sx={{
-                                                    width: 48,
-                                                    height: 48,
-                                                }}
-                                            />
-                                        </div>
-                                        <p className={style.course_author_name}>
-                                            {
-                                                item?.attributes?.teacher?.data
-                                                    ?.attributes?.name
-                                            }
-                                        </p>
+                    {dataCourse
+                        ?.slice(0, 2)
+                        ?.map((item: ICourse, index: number) => (
+                            <Link href={`/khoa-hoc/${item?.id}`} key={index}>
+                                <div className={style.course_slider_item}>
+                                    <div className={style.course_left}>
+                                        <Image
+                                            fetchPriority="high"
+                                            width={0}
+                                            height={0}
+                                            sizes="100vw"
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                            }}
+                                            src={`${baseUrl}${item?.attributes?.image?.data?.attributes?.url}`}
+                                            alt={`${item?.attributes?.image?.data?.attributes?.name}`}
+                                            priority={true}
+                                        />
                                     </div>
-                                    <p className={style.course_txt}>
-                                        Ngày khai giảng
-                                    </p>
-                                    <p className={style.course_time}>
-                                        {dayjs(
-                                            item?.attributes?.startDate
-                                        ).format("DD-MM-YYYY") ?? 0}
-                                    </p>
-                                    <Button
-                                        size="large"
-                                        variant="contained"
-                                        color="secondary"
-                                        // onClick={handleAgree}
-                                    >
-                                        Xem chi tiết
-                                    </Button>
+                                    <div className={style.course_right}>
+                                        <p className={style.course_txt}>
+                                            Khóa học
+                                        </p>
+                                        <h3 className={style.course_name}>
+                                            {item?.attributes?.name}
+                                        </h3>
+                                        <div className={style.course_author}>
+                                            <div
+                                                className={
+                                                    style.course_author_img
+                                                }
+                                            >
+                                                <Avatar
+                                                    alt="author"
+                                                    src={`${baseUrl}${item?.attributes?.teacher?.data?.attributes?.avatar?.data?.attributes?.url}`}
+                                                    sx={{
+                                                        width: 48,
+                                                        height: 48,
+                                                    }}
+                                                />
+                                            </div>
+                                            <p
+                                                className={
+                                                    style.course_author_name
+                                                }
+                                            >
+                                                {
+                                                    item?.attributes?.teacher
+                                                        ?.data?.attributes?.name
+                                                }
+                                            </p>
+                                        </div>
+                                        <p className={style.course_txt}>
+                                            Ngày khai giảng
+                                        </p>
+                                        <p className={style.course_time}>
+                                            {dayjs(
+                                                item?.attributes?.startDate
+                                            ).format("DD-MM-YYYY") ?? 0}
+                                        </p>
+                                        <Button
+                                            size="large"
+                                            variant="contained"
+                                            color="secondary"
+                                            // onClick={handleAgree}
+                                        >
+                                            Xem chi tiết
+                                        </Button>
+                                    </div>
                                 </div>
-                            </div>
-                        </Link>
-                    ))}
+                            </Link>
+                        ))}
                 </Slider>
             </div>
 
@@ -140,69 +150,82 @@ export default function HomeCourse() {
                 </p>
 
                 <div className={style.course_list}>
-                    {dataCourse?.map((item: ICourse, index: number) => (
-                        <Link
-                            href={`/khoa-hoc/${item?.id}`}
-                            key={index}
-                            className={style.course_item}
-                        >
-                            <div className={style.course_item_left}>
-                                <Image
-                                    fetchPriority="high"
-                                    width={0}
-                                    height={0}
-                                    sizes="100vw"
-                                    style={{
-                                        width: "100%",
-                                        height: "100%",
-                                    }}
-                                    src={`${baseUrl}${item?.attributes?.image?.data?.attributes?.url}`}
-                                    alt={`${item?.attributes?.image?.data?.attributes?.name}`}
-                                    priority={true}
-                                />
-                            </div>
-                            <div className={style.course_item_right}>
-                                <h3 className={style.course_name}>
-                                    {item?.attributes?.name}
-                                </h3>
-                                <div className={style.course_info}>
-                                    <div className={style.course_author}>
-                                        <div
-                                            className={style.course_author_img}
-                                        >
-                                            <Avatar
-                                                alt="author"
-                                                src={`${baseUrl}${item?.attributes?.teacher?.data?.attributes?.avatar?.data?.attributes?.url}`}
-                                                sx={{
-                                                    width: 36,
-                                                    height: 36,
-                                                }}
-                                            />
+                    {dataCourse
+                        ?.slice(0, 3)
+                        .map((item: ICourse, index: number) => (
+                            <Link
+                                href={`/khoa-hoc/${item?.id}`}
+                                key={index}
+                                className={style.course_item}
+                            >
+                                <div className={style.course_item_left}>
+                                    <Image
+                                        fetchPriority="high"
+                                        width={0}
+                                        height={0}
+                                        sizes="100vw"
+                                        style={{
+                                            width: "100%",
+                                            height: "100%",
+                                        }}
+                                        src={`${baseUrl}${item?.attributes?.image?.data?.attributes?.url}`}
+                                        alt={`${item?.attributes?.image?.data?.attributes?.name}`}
+                                        priority={true}
+                                    />
+                                </div>
+                                <div className={style.course_item_right}>
+                                    <h3 className={style.course_name}>
+                                        {item?.attributes?.name}
+                                    </h3>
+                                    <div className={style.course_info}>
+                                        <div className={style.course_author}>
+                                            <div
+                                                className={
+                                                    style.course_author_img
+                                                }
+                                            >
+                                                <Avatar
+                                                    alt="author"
+                                                    src={`${baseUrl}${item?.attributes?.teacher?.data?.attributes?.avatar?.data?.attributes?.url}`}
+                                                    sx={{
+                                                        width: 36,
+                                                        height: 36,
+                                                    }}
+                                                />
+                                            </div>
+                                            <p
+                                                className={
+                                                    style.course_author_name
+                                                }
+                                            >
+                                                {
+                                                    item?.attributes?.teacher
+                                                        ?.data?.attributes?.name
+                                                }
+                                            </p>
                                         </div>
-                                        <p className={style.course_author_name}>
-                                            {
-                                                item?.attributes?.teacher?.data
-                                                    ?.attributes?.name
-                                            }
+                                        <p className={style.course_time}>
+                                            {dayjs(
+                                                item?.attributes?.startDate
+                                            ).format("DD-MM-YYYY") ?? 0}
                                         </p>
                                     </div>
-                                    <p className={style.course_time}>
-                                        {dayjs(
-                                            item?.attributes?.startDate
-                                        ).format("DD-MM-YYYY") ?? 0}
-                                    </p>
+                                    <Button
+                                        size="large"
+                                        variant="outlined"
+                                        color="secondary"
+                                        // onClick={handleAgree}
+                                    >
+                                        Xem chi tiết
+                                    </Button>
                                 </div>
-                                <Button
-                                    size="large"
-                                    variant="outlined"
-                                    color="secondary"
-                                    // onClick={handleAgree}
-                                >
-                                    Xem chi tiết
-                                </Button>
-                            </div>
-                        </Link>
-                    ))}
+                            </Link>
+                        ))}
+                </div>
+                <div className={style.btn_seemore}>
+                    <Button size="large" variant="contained" color="secondary">
+                        <Link href="/danh-sach-khoa-hoc">Xem Thêm</Link>
+                    </Button>
                 </div>
             </div>
         </div>

@@ -1,18 +1,15 @@
 import { NextPageWithLayout } from "@/common";
 import { Seo } from "@/components";
+import { Card } from "@/components/card";
 import { ProfileLayout } from "@/layouts";
-import { IProfileState } from "@/store/zustand/type";
 import { useProfileStore } from "@/store/zustand";
+import { IProfileState } from "@/store/zustand/type";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import dayjs from "dayjs";
 import { Controller, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import style from "./style.module.css";
-import { Card } from "@/components/card";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
 
 interface FormData {
     name: string;
@@ -26,7 +23,6 @@ const EditProfile: NextPageWithLayout = () => {
         state.isLoading,
         state.profile,
     ]);
-console.log(profile?.attributes?.object_user?.name);
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Name is required"),
         email: Yup.string()

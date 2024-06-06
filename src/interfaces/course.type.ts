@@ -15,6 +15,14 @@ export interface ICourse {
     };
 }
 
+export interface ICourseOrder {
+    id: number;
+    note: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string | null;
+}
+
 export interface IImage {
     data: {
         id: number;
@@ -25,8 +33,10 @@ export interface IImage {
             width: number;
             height: number;
             formats: {
-                small: ImageFormat;
-                thumbnail: ImageFormat;
+                small?: ImageFormat;
+                medium?: ImageFormat;
+                large?: ImageFormat;
+                thumbnail?: ImageFormat;
             };
             hash: string;
             ext: string;

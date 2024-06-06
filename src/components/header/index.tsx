@@ -16,6 +16,7 @@ export default function Header() {
     const [profile] = useProfileStore((state: IProfileState) => [
         state.profile,
     ]);
+    const IS_MB = useMediaQuery("(max-width:1023px)");
 
     function handleActiveHambuger() {
         document.body.classList.toggle(style.body_active);
@@ -71,15 +72,22 @@ export default function Header() {
                 </Link>
             ) : (
                 <Link
+                    onClick={() => handleActiveHambuger()}
                     href={"/profile/edit-profile"}
                     className={style.header_btn_login}
                 >
                     <Avatar
                         alt={profile?.attributes?.username}
-                        sx={{backgroundColor: "var(--secondary-cl)", width: 36, height: 36 }}
+                        sx={{
+                            backgroundColor: "var(--secondary-cl)",
+                            width: IS_MB ? 30 : 36,
+                            height: IS_MB ? 30 : 36,
+                        }}
                         src="..."
-                        ></Avatar>
-                    <p>{profile?.attributes?.username}</p>
+                    ></Avatar>
+                    <p className={style.header_username}>
+                        {profile?.attributes?.username}
+                    </p>
                 </Link>
             )}
         </div>
@@ -157,7 +165,7 @@ const HeaderNav = (props: IProps) => {
                     onClick={() => handleActiveHambuger()}
                     className={style.nav_li}
                 >
-                    <Link href="#">Bài viết</Link>
+                    <Link href="/bai-viet">Bài viết</Link>
                 </li>
             </ul>
         </nav>

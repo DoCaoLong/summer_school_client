@@ -1,23 +1,21 @@
+import { NextPageWithLayout } from "@/common";
+import { QR_KEY, QR_TIME_CACHE } from "@/constants";
+import { IKnown, IObjectUserApi } from "@/interfaces/index.type";
+import { SignLayout } from "@/layouts";
+import { authApi, knowApi } from "@/services";
+import { objectUserApi } from "@/services/objectUser.api";
 import { validate } from "@/utils";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { DatePicker, LoadingButton } from "@mui/lab";
+import { LoadingButton } from "@mui/lab";
 import { Container, useMediaQuery } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-// import { useMutation } from "react-query";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
 import style from "../style.module.css";
-// import { IRegister } from "@/interfaces/index.type";
-import { useCallback, useState } from "react";
-import { useRouter } from "next/router";
-import { NextPageWithLayout } from "@/common";
-import { SignLayout } from "@/layouts";
-import { toast } from "react-toastify";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { QR_KEY, QR_TIME_CACHE } from "@/constants";
-import { IObjectUserApi, objectUserApi } from "@/services/objectUser.api";
-import { authApi } from "@/services";
 
 const RegisterPage: NextPageWithLayout = () => {
     const IS_MB = useMediaQuery("(max-width:767px)");
@@ -28,8 +26,15 @@ const RegisterPage: NextPageWithLayout = () => {
         queryFn: () => objectUserApi.getObjectUser(),
         staleTime: QR_TIME_CACHE,
     });
-
     const dataObjectUser = objectUsers?.data || [];
+
+    const { data: know } = useQuery({
+        queryKey: [QR_KEY.KNOW],
+        queryFn: () => knowApi.getKnow(),
+        staleTime: QR_TIME_CACHE,
+    });
+    const dataKnow = know?.data || [];
+    console.log(dataKnow);
 
     const validationSchema = Yup.object({
         username: Yup.string().required("Vui lòng nhập họ và tên"),
@@ -45,8 +50,12 @@ const RegisterPage: NextPageWithLayout = () => {
             }),
         dateOfBirth: Yup.string().required("Vui lòng chọn ngày sinh"),
         password: Yup.string().required("Vui lòng nhập mật khẩu"),
-        objectUserId: Yup.string().required("Vui lòng chọn đối tượng học")
-        .notOneOf(["0"], "Vui lòng chọn chức vụ"),
+        objectUserId: Yup.string()
+            .required("Vui lòng chọn đối tượng học")
+            .notOneOf(["0"], "Vui lòng chọn chức vụ"),
+        knowledge_id: Yup.string()
+            .required("Vui lòng chọn đối tượng học")
+            .notOneOf(["0"], "Vui lòng chọn trường này"),
 
         // password: Yup.string()
         //   .required("Password is required")
@@ -74,6 +83,7 @@ const RegisterPage: NextPageWithLayout = () => {
             // telephone: "",
             dateOfBirth: "",
             objectUserId: "0",
+            knowledge_id: "0",
         },
     });
 
@@ -93,7 +103,7 @@ const RegisterPage: NextPageWithLayout = () => {
         },
         onError: (error) => {
             const err = error as AxiosError<any>;
-            console.log()
+            console.log();
             if (
                 err?.response?.data?.error?.message ==
                 "This attribute must be unique"
@@ -109,7 +119,6 @@ const RegisterPage: NextPageWithLayout = () => {
         <>
             <Container>
                 <div className={style.loginWraper}>
-                    {/* <div className={style.loginLeft}></div> */}
                     <div className={style.loginRight}>
                         <form
                             className={style.loginForm}
@@ -132,21 +141,7 @@ const RegisterPage: NextPageWithLayout = () => {
                                         </p>
                                     )}
                                 </div>
-                                {/* <div className={style.wrapInput}>
-                                    <input
-                                        {...register("telephone", {
-                                            required: true,
-                                        })}
-                                        type="number"
-                                        placeholder="Số điện thoại"
-                                        className={style.input}
-                                    />
-                                    {errors.telephone && (
-                                        <p className={style.textErr}>
-                                            {errors.telephone.message}
-                                        </p>
-                                    )}
-                                </div> */}
+
                                 <div className={style.wrapInput}>
                                     <input
                                         {...register("email", {
@@ -175,7 +170,7 @@ const RegisterPage: NextPageWithLayout = () => {
                                         className={style.input}
                                     >
                                         <option value={0}>
-                                            Chọc chức vụ
+                                            Chọn nghành nghề
                                         </option>
                                         {dataObjectUser?.map(
                                             (
@@ -213,6 +208,31 @@ const RegisterPage: NextPageWithLayout = () => {
                                         </p>
                                     )}
                                 </div>
+                            </div>
+
+                            <div className={style.wrapInput}>
+                                <select
+                                    {...register("knowledge_id", {
+                                        required: true,
+                                    })}
+                                    name="knowledge_id"
+                                    id="knowledge_id"
+                                    className={style.input}
+                                >
+                                    <option value={0}>
+                                        Bạn biết gì về lớp hè
+                                    </option>
+                                    {dataKnow?.map((item: IKnown) => (
+                                        <option key={item.id} value={item?.id}>
+                                            {item?.attributes?.name}
+                                        </option>
+                                    ))}
+                                </select>
+                                {errors.knowledge_id && (
+                                    <p className={style.textErr}>
+                                        {errors.knowledge_id.message}
+                                    </p>
+                                )}
                             </div>
 
                             <div className={style.wrapInput}>

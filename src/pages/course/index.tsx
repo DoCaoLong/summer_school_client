@@ -8,6 +8,7 @@ import { ICourse } from "@/interfaces/course.type";
 import Image from "next/image";
 import style from "./style.module.css";
 import Link from "next/link";
+import dayjs from "dayjs";
 
 const Course: NextPageWithLayout = () => {
     const baseUrl = process.env.NEXT_PUBLIC_URL;
@@ -90,7 +91,7 @@ const Course: NextPageWithLayout = () => {
                                         </p>
                                     </div>
                                     <p className={style.course_time}>
-                                        17/10/2024
+                                        {dayjs(item?.attributes?.startDate).format('DD-MM-YYYY')}
                                     </p>
                                 </div>
                                 <Button
