@@ -9,6 +9,7 @@ import { courseApi } from "@/services";
 import { ICourse } from "@/interfaces/course.type";
 import { useProfileStore } from "@/store/zustand";
 import { IProfileState } from "@/store/zustand/type";
+import { useLogout } from "@/hooks";
 
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -20,6 +21,9 @@ export default function Header() {
 
     function handleActiveHambuger() {
         document.body.classList.toggle(style.body_active);
+    }
+    function handleRemoveHambuger() {
+        document.body.classList.remove(style.body_active);
     }
 
     useEffect(() => {
@@ -65,14 +69,14 @@ export default function Header() {
                     LOGO
                 </Link>
             </div>
-            <HeaderNav handleActiveHambuger={handleActiveHambuger} />
+            <HeaderNav handleRemoveHambuger={handleRemoveHambuger} />
             {!profile ? (
                 <Link href={"/auth/login"} className={style.header_btn_login}>
                     Đăng nhập
                 </Link>
             ) : (
                 <Link
-                    onClick={() => handleActiveHambuger()}
+                    onClick={() => handleRemoveHambuger()}
                     href={"/profile/edit-profile"}
                     className={style.header_btn_login}
                 >
@@ -117,13 +121,21 @@ export default function Header() {
 // };
 
 interface IProps {
-    handleActiveHambuger: () => void;
+    handleRemoveHambuger: () => void;
 }
 const HeaderNav = (props: IProps) => {
-    const { handleActiveHambuger } = props;
+    const [profile] = useProfileStore((state: IProfileState) => [
+        state.profile,
+    ]);
+    const { handleRemoveHambuger } = props;
     const IS_MB = useMediaQuery("(max-width:1023px)");
     const params: { populate: string } = {
         populate: "teacher, teacher.avatar, image",
+    };
+    const onLogout = useLogout();
+    const handleLogout = () => {
+        handleRemoveHambuger();
+        onLogout();
     };
     const { data: course } = useQuery({
         queryKey: [QR_KEY.COURSE],
@@ -135,13 +147,13 @@ const HeaderNav = (props: IProps) => {
         <nav className={style.nav}>
             <ul className={style.nav_ul}>
                 <li
-                    onClick={() => handleActiveHambuger()}
+                    onClick={() => handleRemoveHambuger()}
                     className={style.nav_li}
                 >
                     <Link href="/">Trang chủ</Link>
                 </li>
                 <li
-                    onClick={() => handleActiveHambuger()}
+                    onClick={() => handleRemoveHambuger()}
                     className={style.nav_li}
                 >
                     <Link href={"/danh-sach-khoa-hoc"}>
@@ -162,11 +174,16 @@ const HeaderNav = (props: IProps) => {
                     </ul>
                 </li>
                 <li
-                    onClick={() => handleActiveHambuger()}
+                    onClick={() => handleRemoveHambuger()}
                     className={style.nav_li}
                 >
                     <Link href="/bai-viet">Bài viết</Link>
                 </li>
+                {IS_MB && profile && (
+                    <li onClick={handleLogout} className={style.nav_li}>
+                        <Link href="/">Đăng xuất</Link>
+                    </li>
+                )}
             </ul>
         </nav>
     );

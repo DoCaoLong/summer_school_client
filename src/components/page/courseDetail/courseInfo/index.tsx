@@ -31,7 +31,9 @@ export default function CourseInfo() {
     const idCourse = router?.query?.courseId as string;
     const [open, setOpen] = useState<boolean>(false);
     const [checkOrder, setCheckOrder] = useState<boolean>(false);
-
+    const [profile] = useProfileStore((state: IProfileState) => [
+        state.profile,
+    ]);
     function handleClose() {
         setOpen(false);
     }
@@ -127,7 +129,11 @@ export default function CourseInfo() {
                             size="large"
                             variant="contained"
                             color="secondary"
-                            onClick={() => setOpen(true)}
+                            onClick={
+                                profile
+                                    ? () => setOpen(true)
+                                    : () => router.push("/auth/login")
+                            }
                         >
                             {checkOrder ? "Đã đăng ký" : "Đăng ký ngay"}
                         </Button>

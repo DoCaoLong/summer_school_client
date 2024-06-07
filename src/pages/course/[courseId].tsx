@@ -9,9 +9,7 @@ const CourseDetail: NextPageWithLayout = () => {
     return (
         <>
             <CourseInfo />
-            <Container maxWidth="lg">
-                <CourseTeacher />
-            </Container>
+            <Container maxWidth="lg">{/* <CourseTeacher /> */}</Container>
         </>
     );
 };
