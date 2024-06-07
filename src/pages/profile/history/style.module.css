@@ -58,7 +58,16 @@
     text-overflow: ellipsis;
     word-break: break-word;
 }
+.not_register {
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+    color: var(--text-gray);
+}
 @media screen and (max-width: 767.98px) {
+    .not_register {
+        font-size: 18px;
+    }
     .profile_his_item {
         flex-direction: column;
     }

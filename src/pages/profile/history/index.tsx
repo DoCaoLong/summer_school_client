@@ -29,60 +29,75 @@ const History: NextPageWithLayout = () => {
             <Card title={"Khóa học đã đăng ký"}>
                 <div className={style.edit_profile_body}>
                     <div className={style.profile_his_list}>
-                        {dataCourseOrder?.map((item: IOrderCourse) => (
-                            <Link
-                                href={`/khoa-hoc/${item?.courses[0]?.id}`}
-                                key={item?.id}
-                                className={style.profile_his_item}
-                            >
-                                <div className={style.his_item_img}>
-                                    <Image
-                                        fetchPriority="high"
-                                        width={0}
-                                        height={0}
-                                        sizes="100vw"
-                                        style={{
-                                            width: "100%",
-                                            height: "100%",
-                                        }}
-                                        src={`${baseUrl}${item?.courses[0]?.image?.url}`}
-                                        alt={item?.courses[0]?.image?.name}
-                                        priority={true}
-                                    />
-                                </div>
-                                <div className={style.his_content}>
-                                    <div className={style.his_name}>
-                                        {item?.courses[0]?.name}
-                                    </div>
-                                    <div className={style.his_author}>
-                                        <Avatar
-                                            alt={
-                                                item?.courses[0]?.teacher?.name
-                                            }
-                                            src={`${baseUrl}${item?.courses[0]?.teacher?.avatar?.url}`}
-                                            sx={{
-                                                width: 36,
-                                                height: 36,
+                        {dataCourseOrder.length !== 0 ? (
+                            dataCourseOrder?.map((item: IOrderCourse) => (
+                                <Link
+                                    href={`/khoa-hoc/${item?.courses[0]?.id}`}
+                                    key={item?.id}
+                                    className={style.profile_his_item}
+                                >
+                                    <div className={style.his_item_img}>
+                                        <Image
+                                            fetchPriority="high"
+                                            width={0}
+                                            height={0}
+                                            sizes="100vw"
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
                                             }}
+                                            src={`${baseUrl}${item?.courses[0]?.image?.url}`}
+                                            alt={item?.courses[0]?.image?.name}
+                                            priority={true}
                                         />
-                                        <p>{item?.courses[0]?.teacher?.name}</p>
                                     </div>
-                                    <div className={style.his_course_info}>
-                                        <p
-                                            className={
-                                                style.his_numberOfSessions
-                                            }
-                                        >
-                                            {item?.courses[0]?.numberOfSessions}{" "}
-                                            Buổi
-                                        </p>
-                                        <p className={style.his_startDate}>
-                                            {item?.courses[0]?.startDate}
-                                        </p>
+                                    <div className={style.his_content}>
+                                        <div className={style.his_name}>
+                                            {item?.courses[0]?.name}
+                                        </div>
+                                        <div className={style.his_author}>
+                                            <Avatar
+                                                alt={
+                                                    item?.courses[0]?.teacher
+                                                        ?.name
+                                                }
+                                                src={`${baseUrl}${item?.courses[0]?.teacher?.avatar?.url}`}
+                                                sx={{
+                                                    width: 36,
+                                                    height: 36,
+                                                }}
+                                            />
+                                            <p>
+                                                {
+                                                    item?.courses[0]?.teacher
+                                                        ?.name
+                                                }
+                                            </p>
+                                        </div>
+                                        <div className={style.his_course_info}>
+                                            <p
+                                                className={
+                                                    style.his_numberOfSessions
+                                                }
+                                            >
+                                                {
+                                                    item?.courses[0]
+                                                        ?.numberOfSessions
+                                                }{" "}
+                                                Buổi
+                                            </p>
+                                            <p className={style.his_startDate}>
+                                                {item?.courses[0]?.startDate}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                            </Link>
-                        ))}
+                                </Link>
+                            ))
+                        ) : (
+                            <p className={style.not_register}>
+                                Bạn chưa đăng ký khóa học nào
+                            </p>
+                        )}
                     </div>
                 </div>
             </Card>

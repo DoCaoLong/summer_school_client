@@ -147,9 +147,9 @@
 @media screen and (max-width: 767.98px) {
     .profile {
         position: relative;
-        padding: 24px 0 16px;
+        padding: 0;
         overflow-y: auto;
-        height: calc(100vh - 16px);
+        /* height: calc(100vh - 16px); */
     }
     .profile::-webkit-scrollbar {
         display: none;

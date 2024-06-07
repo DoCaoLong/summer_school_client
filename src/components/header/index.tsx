@@ -77,7 +77,7 @@ export default function Header() {
             ) : (
                 <Link
                     onClick={() => handleRemoveHambuger()}
-                    href={"/profile/edit-profile"}
+                    href={IS_MB ? "/profile" : "/profile/edit-profile"}
                     className={style.header_btn_login}
                 >
                     <Avatar

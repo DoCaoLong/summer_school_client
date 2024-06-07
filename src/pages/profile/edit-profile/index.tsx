@@ -81,7 +81,7 @@ const EditProfile: NextPageWithLayout = () => {
                                             InputProps={{
                                                 readOnly: true,
                                             }}
-                                            disabled
+                                            // disabled
                                         />
                                     )}
                                 />
@@ -103,7 +103,7 @@ const EditProfile: NextPageWithLayout = () => {
                                             InputProps={{
                                                 readOnly: true,
                                             }}
-                                            disabled
+                                            // disabled
                                         />
                                     )}
                                 />
@@ -125,7 +125,7 @@ const EditProfile: NextPageWithLayout = () => {
                                             InputProps={{
                                                 readOnly: true,
                                             }}
-                                            disabled
+                                            // disabled
                                         />
                                     )}
                                 />
@@ -140,12 +140,14 @@ const EditProfile: NextPageWithLayout = () => {
                                             variant="outlined"
                                             fullWidth
                                             error={!!errors.dateOfBirth}
-                                            helperText={errors.dateOfBirth?.message}
+                                            helperText={
+                                                errors.dateOfBirth?.message
+                                            }
                                             size="medium"
                                             InputProps={{
                                                 readOnly: true,
                                             }}
-                                            disabled
+                                            // disabled
                                         />
                                     )}
                                 />
