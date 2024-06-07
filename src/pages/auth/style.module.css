@@ -22,10 +22,10 @@
     width: 100%;
     display: flex;
     align-items: center;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: center;
-    margin: 0 auto;
-    padding-top: 48px;
+    /* margin: 0 auto; */
+    /* padding-top: 48px; */
 }
 .loginForm {
     border-radius: 16px;
