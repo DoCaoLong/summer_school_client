@@ -1,37 +1,27 @@
 import { NextPageWithLayout } from "@/common";
 import { Seo } from "@/components";
-import { IProfileState } from "@/store/zustand/type";
-import { useProfileStore } from "@/store/zustand";
-import style from "./style.module.css";
-import { ProfileLayout } from "@/layouts";
 import { Card } from "@/components/card";
-import { Avatar, useMediaQuery } from "@mui/material";
 import { QR_KEY, QR_TIME_CACHE } from "@/constants";
-import { useQuery } from "@tanstack/react-query";
-import { courseApi } from "@/services";
-import CourseItem from "@/components/courseItem";
 import { IOrderCourse } from "@/interfaces/orderCourse.type";
-import { ICourseDetail } from "@/interfaces/course.type";
+import { ProfileLayout } from "@/layouts";
+import { courseApi } from "@/services";
+import { Avatar } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
+import style from "./style.module.css";
 
 const History: NextPageWithLayout = () => {
-    const [isLoading] = useProfileStore((state: IProfileState) => [
-        state.isLoading,
-    ]);
-
     const baseUrl = process.env.NEXT_PUBLIC_URL;
-    const IS_MB = useMediaQuery("(max-width:1023px)");
     const params: { populate: string } = {
         populate: "teacher, teacher.avatar, image",
     };
     const { data: courseOrder } = useQuery({
         queryKey: [QR_KEY.COURSE_ORDER],
         queryFn: () => courseApi.getCourseOrder({ params }),
-        staleTime: QR_TIME_CACHE,
+        staleTime: 1000,
     });
     const dataCourseOrder = courseOrder?.data ?? [];
-    console.log(dataCourseOrder);
 
     return (
         <>
