@@ -1,12 +1,18 @@
 import { QR_KEY, QR_TIME_CACHE } from "@/constants";
 import { courseApi } from "@/services";
-import { Button, Dialog, DialogTitle, TextField } from "@mui/material";
+import {
+    Button,
+    Container,
+    Dialog,
+    DialogTitle,
+    TextField,
+} from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import style from "./style.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
@@ -16,15 +22,24 @@ import { ICourse } from "@/interfaces/course.type";
 import { IResponseList } from "@/interfaces/res.type";
 import { useProfileStore } from "@/store/zustand";
 import { IProfileState } from "@/store/zustand/type";
+import { IOrderCourse } from "@/interfaces/orderCourse.type";
+import { queryClient } from "@/configs";
 
 export default function CourseInfo() {
     const router = useRouter();
     const baseUrl = process.env.NEXT_PUBLIC_URL;
     const idCourse = router?.query?.courseId as string;
     const [open, setOpen] = useState<boolean>(false);
+    const [checkOrder, setCheckOrder] = useState<boolean>(false);
+
     function handleClose() {
         setOpen(false);
     }
+
+    function handleCheckOrder() {
+        setCheckOrder(true);
+    }
+
     const params: { populate: string } = {
         populate: "teacher, teacher.avatar, image",
     };
@@ -41,26 +56,44 @@ export default function CourseInfo() {
         staleTime: QR_TIME_CACHE,
     });
 
+    const { data: courseOrder } = useQuery({
+        queryKey: [QR_KEY.COURSE_ORDER],
+        queryFn: () => courseApi.getCourseOrder({ params }),
+        staleTime: QR_TIME_CACHE,
+    });
+
+    useEffect(() => {
+        if (courseOrder && courseDetail) {
+            const isOrdered = courseOrder?.data.some((item: IOrderCourse) => {
+                return item?.courses[0].id === courseDetail?.data?.id;
+            });
+            setCheckOrder(isOrdered);
+        }
+    }, [courseOrder, courseDetail]);
+
     if (isError) {
-        toast.error(`Có lỗi sảy ra vui lòng thử lại sau (${error})`);
+        toast.error(`Có lỗi xảy ra vui lòng thử lại sau (${error})`);
     }
 
     const imgCourse =
-        courseDetail &&
         courseDetail?.data?.attributes?.image?.data?.attributes?.url;
 
     const backgroundImageStyle = {
         backgroundImage: `url(${
-            !!imgCourse
+            imgCourse
                 ? `${baseUrl}${imgCourse}`
                 : "https://source.unsplash.com/random"
         })`,
     };
+
     return (
         <div className={style.course_info}>
-            <div style={backgroundImageStyle} className={style.course_bg}></div>
-            <div className={style.course_info_content}>
-                <div className={style.info_banner}>
+            <div className={style.course_bgwrap}>
+                <div
+                    className={style.course_bg}
+                    style={backgroundImageStyle}
+                ></div>
+                <div className={style.course_info_content}>
                     <div className={style.info_banner_content}>
                         <p className={style.info_banner_text}>Khóa học</p>
                         <h1 className={style.info_banner_name}>
@@ -90,18 +123,28 @@ export default function CourseInfo() {
                             </div>
                         </div>
                         <Button
+                            disabled={checkOrder}
                             size="large"
                             variant="contained"
                             color="secondary"
                             onClick={() => setOpen(true)}
                         >
-                            Đăng ký khóa học
+                            {checkOrder ? "Đã đăng ký" : "Đăng ký ngay"}
                         </Button>
                     </div>
                 </div>
             </div>
+            <div className={style.course_info_botom}>
+                <Container maxWidth="md">
+                    <p className={style.course_info_title}>Mô tả khóa học</p>
+                    <p className={style.course_info_desc}>
+                        {courseDetail?.data?.attributes?.content}
+                    </p>
+                </Container>
+            </div>
             {courseDetail && (
                 <DialogCourse
+                    setCheckOrder={handleCheckOrder}
                     courseDetail={courseDetail}
                     open={open}
                     handleClose={handleClose}
@@ -114,21 +157,21 @@ export default function CourseInfo() {
 interface IProps {
     open: boolean;
     handleClose: () => void;
+    setCheckOrder: () => void;
     courseDetail: IResponseList<ICourse>;
 }
 
 export const DialogCourse = (props: IProps) => {
-    const { open, handleClose, courseDetail } = props;
+    const { open, handleClose, courseDetail, setCheckOrder } = props;
     type FormData = Yup.InferType<typeof validationSchema>;
     const validationSchema = Yup.object().shape({
-        note: Yup.string(),
+        note: Yup.string().required("Hãy để lại mong muốn của mình nhé!"),
         name: Yup.string(),
         email: Yup.string(),
         dateOfBirth: Yup.string(),
         objectUser: Yup.string(),
     });
-    const [isLoading, profile] = useProfileStore((state: IProfileState) => [
-        state.isLoading,
+    const [profile] = useProfileStore((state: IProfileState) => [
         state.profile,
     ]);
 
@@ -157,14 +200,17 @@ export const DialogCourse = (props: IProps) => {
         };
         mutate(newData);
     };
-    const { mutate } = useMutation({
+    const { mutate, status } = useMutation({
         mutationFn: (body: any) => courseApi.postOrderCourse(body),
         onSuccess: async () => {
             reset();
             toast.success("Đăng ký thành công");
             handleClose();
+            queryClient.invalidateQueries({
+                queryKey: [QR_KEY.COURSE_DETAIL, QR_KEY.COURSE_ORDER],
+            });
         },
-        onError: (error) => {
+        onError: (error: any) => {
             const err = error as AxiosError<any>;
             console.log(err);
             toast.error(`${err ?? ""}`);
@@ -273,7 +319,7 @@ export const DialogCourse = (props: IProps) => {
                                 <TextField
                                     {...field}
                                     id="note"
-                                    label="Nêu cảm nghỉ"
+                                    label="Aa"
                                     variant="outlined"
                                     fullWidth
                                     error={!!errors.note}
@@ -286,8 +332,9 @@ export const DialogCourse = (props: IProps) => {
                     <div className={style.btn_dialog_submit}>
                         <LoadingButton
                             type="submit"
-                            // loading={isLoading}
+                            loading={status == "pending"}
                             variant="contained"
+                            onClick={setCheckOrder}
                         >
                             Đăng ký
                         </LoadingButton>

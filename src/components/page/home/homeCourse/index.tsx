@@ -11,6 +11,7 @@ import { courseApi } from "@/services";
 import { ICourse } from "@/interfaces/course.type";
 import Link from "next/link";
 import dayjs from "dayjs";
+import CourseItem from "@/components/courseItem";
 export default function HomeCourse() {
     const IS_MB = useMediaQuery("(max-width:1023px)");
     const slider = React.useRef<any>(null);
@@ -153,73 +154,7 @@ export default function HomeCourse() {
                     {dataCourse
                         ?.slice(0, 3)
                         .map((item: ICourse, index: number) => (
-                            <Link
-                                href={`/khoa-hoc/${item?.id}`}
-                                key={index}
-                                className={style.course_item}
-                            >
-                                <div className={style.course_item_left}>
-                                    <Image
-                                        fetchPriority="high"
-                                        width={0}
-                                        height={0}
-                                        sizes="100vw"
-                                        style={{
-                                            width: "100%",
-                                            height: "100%",
-                                        }}
-                                        src={`${baseUrl}${item?.attributes?.image?.data?.attributes?.url}`}
-                                        alt={`${item?.attributes?.image?.data?.attributes?.name}`}
-                                        priority={true}
-                                    />
-                                </div>
-                                <div className={style.course_item_right}>
-                                    <h3 className={style.course_name}>
-                                        {item?.attributes?.name}
-                                    </h3>
-                                    <div className={style.course_info}>
-                                        <div className={style.course_author}>
-                                            <div
-                                                className={
-                                                    style.course_author_img
-                                                }
-                                            >
-                                                <Avatar
-                                                    alt="author"
-                                                    src={`${baseUrl}${item?.attributes?.teacher?.data?.attributes?.avatar?.data?.attributes?.url}`}
-                                                    sx={{
-                                                        width: 36,
-                                                        height: 36,
-                                                    }}
-                                                />
-                                            </div>
-                                            <p
-                                                className={
-                                                    style.course_author_name
-                                                }
-                                            >
-                                                {
-                                                    item?.attributes?.teacher
-                                                        ?.data?.attributes?.name
-                                                }
-                                            </p>
-                                        </div>
-                                        <p className={style.course_time}>
-                                            {dayjs(
-                                                item?.attributes?.startDate
-                                            ).format("DD-MM-YYYY") ?? 0}
-                                        </p>
-                                    </div>
-                                    <Button
-                                        size="large"
-                                        variant="outlined"
-                                        color="secondary"
-                                        // onClick={handleAgree}
-                                    >
-                                        Xem chi tiết
-                                    </Button>
-                                </div>
-                            </Link>
+                            <CourseItem key={item?.id} itemCourse={item} />
                         ))}
                 </div>
                 <div className={style.btn_seemore}>

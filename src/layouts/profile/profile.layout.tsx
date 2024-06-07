@@ -24,12 +24,12 @@ const tabItem = [
         href: "/profile/edit-profile",
         img: <BiSolidUser style={{ color: "var(--primary)" }} size={20} />,
     },
-    // {
-    //     id: 2,
-    //     title: "Lịch sử mua hàng",
-    //     href: "/profile/history",
-    //     img: <BiHistory style={{ color: "var(--primary)" }} size={20} />,
-    // },
+    {
+        id: 2,
+        title: "Khóa học đã đăng ký",
+        href: "/profile/history",
+        img: <BiHistory style={{ color: "var(--primary)" }} size={20} />,
+    },
     // {
     //   id: 5,
     //   title: "Thông tin đơn hàng",

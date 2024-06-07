@@ -152,7 +152,7 @@ const HeaderNav = (props: IProps) => {
                         />
                     </Link>
                     <ul className={style.nav_submenu}>
-                        {dataCourse?.map((item: ICourse, index: number) => (
+                        {dataCourse?.map((item: ICourse) => (
                             <li key={item?.id}>
                                 <Link href={`/khoa-hoc/${item?.id}`}>
                                     {item?.attributes?.name}

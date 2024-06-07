@@ -1,7 +1,6 @@
 .profile_page {
     background-color: var(--bg-gray);
-    height: 100vh;
-    overflow: hidden;
+    margin-bottom: 24px;
 }
 .profile {
     max-width: 976px;

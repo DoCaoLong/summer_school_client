@@ -1,8 +1,4 @@
 import { axiosConfig } from "@/configs";
-import {
-    ICourse,
-    IResponseList,
-} from "@/interfaces/index.type";
 
 export interface ILogin {
     identifier: string;

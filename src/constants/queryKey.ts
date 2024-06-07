@@ -5,4 +5,5 @@ export const QR_KEY = {
     KNOW: "KNOW",
     BLOG: "BLOG",
     BLOG_DETAIL: "BLOG_DETAIL",
+    COURSE_ORDER: "COURSE_ORDER",
 };

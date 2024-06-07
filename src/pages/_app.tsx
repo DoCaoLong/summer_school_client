@@ -40,6 +40,10 @@ const theme = createTheme({
             main: "#00afab",
             contrastText: "#fff",
         },
+        action: {
+            disabledBackground: "var(--primary-cl)",
+            disabled: "#fff",
+        },
     },
 });
 export default function App({ Component, pageProps }: AppPropsWithLayout) {

@@ -14,13 +14,19 @@ export interface ICourse {
         teacher: ITeacher;
     };
 }
-
-export interface ICourseOrder {
-    id: number;
-    note: string;
+export interface ICourseDetail {
+    id?: string | number;
+    name: string;
+    title: string;
+    active: boolean;
     createdAt: string;
     updatedAt: string;
-    publishedAt: string | null;
+    numberOfSessions: number | null;
+    startDate: string | null;
+    publishedAt: string;
+    content: string | null;
+    image: IImage;
+    teacher: ITeacher;
 }
 
 export interface IImage {
@@ -32,12 +38,7 @@ export interface IImage {
             caption: string | null;
             width: number;
             height: number;
-            formats: {
-                small?: ImageFormat;
-                medium?: ImageFormat;
-                large?: ImageFormat;
-                thumbnail?: ImageFormat;
-            };
+            formats: AvatarFormats;
             hash: string;
             ext: string;
             mime: string;
@@ -51,7 +52,12 @@ export interface IImage {
         };
     };
 }
-
+export interface AvatarFormats {
+    large?: ImageFormat;
+    small?: ImageFormat;
+    medium?: ImageFormat;
+    thumbnail?: ImageFormat;
+}
 export interface ITeacher {
     data: {
         id: number;
@@ -72,12 +78,7 @@ export interface ITeacher {
                         caption: string | null;
                         width: number;
                         height: number;
-                        formats: {
-                            large: ImageFormat;
-                            small: ImageFormat;
-                            medium: ImageFormat;
-                            thumbnail: ImageFormat;
-                        };
+                        formats: AvatarFormats;
                         hash: string;
                         ext: string;
                         mime: string;

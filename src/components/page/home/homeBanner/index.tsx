@@ -2,12 +2,10 @@ import { Button, useMediaQuery } from "@mui/material";
 import Image from "next/image";
 import { FC } from "react";
 import style from "./style.module.css";
+import Link from "next/link";
+import { imgs } from "@/assets/imgs";
 export const HomeBanner: FC = () => {
     const IS_MB = useMediaQuery("(max-width:767px)");
-    const imgMB =
-        "https://cdn.sanity.io/images/qa41whrn/staging/0bc0ba3aed0566e74b233cab3485e6d6039650e9-1536x1536.jpg?w=720&q=80&auto=format";
-    const imgPC =
-        "https://cdn.sanity.io/images/qa41whrn/staging/26f2ce14a23a1f32577f37954b1356a9bccbaeac-1440x500.jpg?w=2160&q=80&auto=format";
     return (
         <div className={style.homeBanner}>
             <Image
@@ -16,7 +14,7 @@ export const HomeBanner: FC = () => {
                 height={0}
                 sizes="100vw"
                 style={{ width: "100%", height: "100%" }}
-                src={IS_MB ? imgMB : imgPC}
+                src={imgs.bannerHome}
                 alt="..."
                 priority={true}
             />
@@ -40,7 +38,7 @@ export const HomeBanner: FC = () => {
                         size="large"
                         variant="contained"
                     >
-                        Xem ngay
+                        <Link href="/danh-sach-khoa-hoc">Xem ngay</Link>
                     </Button>
                 </div>
             </div>

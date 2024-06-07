@@ -75,7 +75,12 @@ const Course: NextPageWithLayout = () => {
                                             className={style.course_author_img}
                                         >
                                             <Avatar
-                                                alt="Remy Sharp"
+                                                alt={
+                                                    item?.attributes?.teacher
+                                                        ?.data?.attributes
+                                                        ?.avatar?.data
+                                                        ?.attributes?.name
+                                                }
                                                 src={`${baseUrl}${item?.attributes?.teacher?.data?.attributes?.avatar?.data?.attributes?.url}`}
                                                 sx={{
                                                     width: 36,
@@ -91,7 +96,9 @@ const Course: NextPageWithLayout = () => {
                                         </p>
                                     </div>
                                     <p className={style.course_time}>
-                                        {dayjs(item?.attributes?.startDate).format('DD-MM-YYYY')}
+                                        {dayjs(
+                                            item?.attributes?.startDate
+                                        ).format("DD-MM-YYYY")}
                                     </p>
                                 </div>
                                 <Button

@@ -1,10 +1,6 @@
 import { axiosConfig } from "@/configs";
-import {
-    ICourse,
-    ICourseOrder,
-    IResponseDetail,
-    IResponseList,
-} from "@/interfaces/index.type";
+import { ICourse, IResponseList } from "@/interfaces/index.type";
+import { IOrderCourse } from "@/interfaces/orderCourse.type";
 
 export const courseApi = {
     getCourse: (param: any) => {
@@ -20,6 +16,11 @@ export const courseApi = {
     postOrderCourse: (body: any) => {
         return axiosConfig
             .post(`/user-course-order`, body)
-            .then<IResponseList<ICourseOrder>>((res) => res.data);
+            .then<IResponseList<IOrderCourse>>((res) => res.data);
+    },
+    getCourseOrder: (param: any) => {
+        return axiosConfig
+            .get("/user-course-order", param)
+            .then<IResponseList<IOrderCourse[]>>((res) => res.data);
     },
 };
