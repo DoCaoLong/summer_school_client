@@ -1,7 +1,7 @@
 .profile_page {
     background-color: var(--bg-gray);
     margin-bottom: 24px;
-    height: calc(100vh - 156px);
+    min-height: 100vh;
 }
 .profile {
     max-width: 976px;
@@ -120,12 +120,6 @@
     width: max-content;
 }
 @media screen and (max-width: 1023.98px) {
-    .profile {
-        padding: 78px 0 24px 0;
-    }
-    .profile_page {
-        min-height: calc(100vh - 296.59px);
-    }
     .profile_left {
         width: 40%;
     }
@@ -150,6 +144,7 @@
         padding: 0;
         overflow-y: auto;
         /* height: calc(100vh - 16px); */
+        min-height: 100vh;
     }
     .profile::-webkit-scrollbar {
         display: none;

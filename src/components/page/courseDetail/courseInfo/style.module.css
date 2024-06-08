@@ -103,6 +103,12 @@
     text-align: justify;
 }
 @media screen and (max-width: 767.98px) {
+    .course_bgwrap {
+        height: 50vh;
+    }
+    .course_info {
+        margin-top: -50px;
+    }
     .course_info_botom {
         margin-top: 24px;
     }
@@ -123,6 +129,9 @@
     .info_banner_content {
         gap: 24px;
         padding: 0 16px;
+    }
+    .info_banner_content p:nth-child(2) {
+        font-size: 18px;
     }
     .info_banner_name {
         font-size: 32px;
