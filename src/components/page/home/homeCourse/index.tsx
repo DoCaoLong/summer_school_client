@@ -69,8 +69,14 @@ export default function HomeCourse() {
                                                 width: "100%",
                                                 height: "100%",
                                             }}
-                                            src={`${baseUrl}${item?.attributes?.image?.data?.attributes?.url}`}
-                                            alt={`${item?.attributes?.image?.data?.attributes?.name}`}
+                                            src={`${baseUrl}${
+                                                item?.attributes?.image?.data
+                                                    ?.attributes?.url ?? ""
+                                            }`}
+                                            alt={
+                                                item?.attributes?.image?.data
+                                                    ?.attributes?.name ?? ""
+                                            }
                                             priority={true}
                                         />
                                     </div>

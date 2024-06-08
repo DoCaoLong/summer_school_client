@@ -31,7 +31,7 @@ export default function CourseItem(props: IProps) {
                             ? `${baseUrl}${item?.image?.data?.attributes?.url}`
                             : ""
                     }
-                    alt={`${item?.image?.data?.attributes?.name}`}
+                    alt={`${item?.image?.data?.attributes?.name ?? ""}`}
                     priority={true}
                 />
             </div>

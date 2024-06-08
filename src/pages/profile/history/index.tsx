@@ -46,8 +46,14 @@ const History: NextPageWithLayout = () => {
                                                 width: "100%",
                                                 height: "100%",
                                             }}
-                                            src={`${baseUrl}${item?.courses[0]?.image?.url}`}
-                                            alt={item?.courses[0]?.image?.name}
+                                            src={`${baseUrl}${
+                                                item?.courses[0]?.image?.url ??
+                                                ""
+                                            }`}
+                                            alt={
+                                                item?.courses[0]?.image?.name ??
+                                                ""
+                                            }
                                             priority={true}
                                         />
                                     </div>

@@ -53,11 +53,14 @@ const Blog: NextPageWithLayout = () => {
                                             width: "100%",
                                             height: "100%",
                                         }}
-                                        src={`${baseUrl}${item?.attributes?.thumbnail?.data?.attributes?.url}
+                                        src={`${baseUrl}${
+                                            item?.attributes?.thumbnail?.data
+                                                ?.attributes?.url ?? ""
+                                        }
                                     `}
                                         alt={
                                             item?.attributes?.thumbnail?.data
-                                                ?.attributes?.name
+                                                ?.attributes?.name ?? ""
                                         }
                                         priority={true}
                                     />
