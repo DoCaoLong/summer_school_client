@@ -1,13 +1,11 @@
 import { LayoutProps } from "@/common";
 import { Seo } from "@/components";
-import { Container, useMediaQuery } from "@mui/material";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import style from "./style.module.css";
-import Link from "next/link";
-import Image from "next/image";
-import { imgs } from "@/assets/imgs";
 import Footer from "@/components/footer";
+import { Container } from "@mui/material";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import style from "./style.module.css";
 
 interface ISignLayoutProps extends LayoutProps {
     isForgot?: boolean;
@@ -15,7 +13,6 @@ interface ISignLayoutProps extends LayoutProps {
 
 export const SignLayout = ({ children }: ISignLayoutProps) => {
     const router = useRouter();
-    const IS_MB = useMediaQuery("(max-width:767px)");
     const patchName = router.pathname;
     const [title, setTitle] = useState<string>("");
     useEffect(() => {

@@ -1,5 +1,6 @@
 .mainLayout {
     padding: 66px 0;
+    min-height: calc(100vh - 66px);
 }
 @media screen and (max-width: 1023.98px) {
 }

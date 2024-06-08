@@ -104,7 +104,7 @@
 }
 @media screen and (max-width: 767.98px) {
     .course_bgwrap {
-        height: 50vh;
+        height: 60vh;
     }
     .course_info {
         margin-top: -50px;
@@ -134,7 +134,8 @@
         font-size: 18px;
     }
     .info_banner_name {
-        font-size: 32px;
+        font-size: 28px;
+        line-height: 1.2;
     }
     .dialogCourse {
         width: 100%;
