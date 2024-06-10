@@ -4,7 +4,6 @@ export interface IBlog {
     id: number;
     attributes: Attributes;
 }
-
 interface Attributes {
     title: string;
     content: string;

@@ -1,3 +1,4 @@
+import { IReqProfile } from "@/interfaces/req.type";
 import { authApi } from "@/services";
 import { profileApi } from "@/services/profile.api";
 import { IProfileState } from "@/store/zustand/type";
@@ -24,7 +25,20 @@ export const useProfileStore = create<IProfileState>()((set) => ({
         localStorage.removeItem("accessToken");
         set(() => ({ profile: null }));
     },
-    // putProfile: (payload) => {
-    //   set((state) => ({ profile: { ...state.profile, ...payload } }));
-    // },
+    putProfile: (payload: any) => {
+        set((state) => ({ profile: { ...state.profile, ...payload } }));
+    },
+    putProfileApi: async (payload: IReqProfile) => {
+        if (localStorage.getItem("accessToken")) {
+            try {
+                const res = await profileApi.putProfile(payload);
+                set((state) => ({ profile: res.data, isLoading: false }));
+            } catch (error) {
+                console.log(error);
+                set((state) => ({ isLoading: false }));
+            }
+        } else {
+            set((state) => ({ isLoading: false }));
+        }
+    },
 }));

@@ -10,6 +10,11 @@ import dayjs from "dayjs";
 import { Controller, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import style from "./style.module.css";
+import { usePostMedia } from "@/hooks";
+import { ChangeEvent } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { profileApi } from "@/services/profile.api";
+import { IReqProfile } from "@/interfaces/req.type";
 
 interface FormData {
     name: string;
@@ -19,10 +24,11 @@ interface FormData {
 }
 
 const EditProfile: NextPageWithLayout = () => {
-    const [isLoading, profile] = useProfileStore((state: IProfileState) => [
-        state.isLoading,
+    const [profile, putProfile] = useProfileStore((state: IProfileState) => [
         state.profile,
+        state.putProfile,
     ]);
+    const { handlePostMedia } = usePostMedia();
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Name is required"),
         email: Yup.string()
@@ -39,7 +45,9 @@ const EditProfile: NextPageWithLayout = () => {
     } = useForm<FormData>({
         resolver: yupResolver(validationSchema),
         defaultValues: {
-            name: profile?.attributes?.username ?? "",
+            name: profile?.attributes?.fullName
+                ? profile?.attributes?.fullName
+                : profile?.attributes?.username ?? "",
             email: profile?.attributes?.email ?? "",
             dateOfBirth:
                 dayjs(profile?.attributes?.dateOfBirth).format("DD-MM-YYYY") ??
@@ -48,9 +56,37 @@ const EditProfile: NextPageWithLayout = () => {
         },
     });
 
+    const { mutate: handleUpdateProfile, status } = useMutation({
+        mutationKey: ["PUT_PROFILE"],
+        mutationFn: (body: IReqProfile) => profileApi.putProfile(body),
+        onSuccess: (res) => {
+            console.log(res)
+            // putProfile(res);
+            // resultLoad({
+            //     message: "Đã thay đổi thông tin cá nhân",
+            //     color: "success",
+            // });
+        },
+        // onError: () => {
+        //     resultLoad({
+        //         color: "error",
+        //         message: "Có lỗi xảy ra",
+        //     });
+        // },
+    });
+
     const onSubmit = (data: FormData) => {
         console.log(data);
     };
+
+    // const onChangeMedia = async (e: ChangeEvent<HTMLInputElement>) => {
+    //     handlePostMedia({
+    //         e,
+    //         callBack: (data) => {
+    //             handleUpdateProfile({ media_id: data[0].mediaId });
+    //         },
+    //     });
+    // };
 
     return (
         <>

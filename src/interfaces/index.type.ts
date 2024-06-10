@@ -6,3 +6,7 @@ export * from "./profile.type";
 export * from "./authResponse.type";
 export * from "./objectUser.type";
 export * from "./blog.type";
+export * from "./orderCourse.type";
+export * from "./imageFormat.type";
+export * from "./avatar.type";
+export * from "./req.type";

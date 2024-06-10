@@ -1,5 +1,8 @@
+import { IAvatar } from "@/interfaces/avatar.type";
+import { IKnownDetail, IOrderCourse } from "@/interfaces/index.type";
+
 export interface ObjectUser {
-    id: number;
+    id?: number;
     name: string;
     createdAt: string;
     updatedAt: string;
@@ -7,8 +10,8 @@ export interface ObjectUser {
     uid: string | null;
 }
 
-export interface UserAttributes {
-    id: number;
+export interface IUserAttributes {
+    id?: number;
     username: string;
     email: string;
     provider: string;
@@ -19,12 +22,19 @@ export interface UserAttributes {
     createdAt: string;
     updatedAt: string;
     dateOfBirth: string;
-    object_user: ObjectUser;
+    fullName?: string;
+    role?: string | null;
+    object_user?: ObjectUser;
+    course_orders?: IOrderCourse[];
+    knowledge?: IKnownDetail;
+    avatar?: IAvatar;
+    createdBy: null | string;
+    updatedBy: null | string;
 }
 
 export interface IUser {
     id: number;
-    attributes: UserAttributes;
+    attributes: IUserAttributes;
 }
 
 // interface MetaData {}

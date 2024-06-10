@@ -1,21 +1,25 @@
 import { LayoutProps } from "@/common";
+import { ButtonUpload } from "@/components";
+import { QR_KEY } from "@/constants";
+import { usePostMedia } from "@/hooks";
+import { useLogout } from "@/hooks/useLogout";
+import { IReqProfile, IUser } from "@/interfaces/index.type";
 import { AuthLayout } from "@/layouts";
-import { IProfileState } from "@/store/zustand/type";
+import { profileApi } from "@/services";
 import { useProfileStore } from "@/store/zustand";
-import { Avatar, Container, useMediaQuery } from "@mui/material";
+import { IProfileState } from "@/store/zustand/type";
+import { Container, useMediaQuery } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useRef } from "react";
+import { ChangeEvent, useEffect, useRef } from "react";
 import { BiHistory, BiLogOut, BiSolidUser } from "react-icons/bi";
-import { BsCameraFill } from "react-icons/bs";
-import { IoMdHeart } from "react-icons/io";
 import {
-    MdLocationOn,
     MdOutlineArrowBackIosNew,
-    MdOutlineArrowForwardIos,
+    MdOutlineArrowForwardIos
 } from "react-icons/md";
+import { toast } from "react-toastify";
 import style from "./style.module.css";
-import { useLogout } from "@/hooks/useLogout";
 
 const tabItem = [
     {
@@ -39,16 +43,40 @@ const tabItem = [
 ];
 export function ProfileLayout({ children }: LayoutProps) {
     const router = useRouter();
+    const { handlePostMedia } = usePostMedia();
     const patchName = router.pathname
         .split("/")
         .filter((item) => Boolean(item));
     const IS_MB = useMediaQuery("(max-width:767px)");
-    const [profile] = useProfileStore((state: IProfileState) => [
+    const [profile, putProfileApi] = useProfileStore((state: IProfileState) => [
         state.profile,
+        state.putProfileApi,
     ]);
     const refLeft = useRef<HTMLDivElement>(null);
     const refRight = useRef<HTMLDivElement>(null);
     const onLogout = useLogout();
+
+    const { mutate: handleUpdateProfile } = useMutation({
+        mutationKey: [QR_KEY.PUT_PROFILE],
+        mutationFn: (body: IReqProfile) => profileApi.putProfile(body),
+        onSuccess: (res: IUser) => {
+            console.log(res)
+            toast.success("Thay đổi thành công");
+        },
+        onError: (error) => {
+            toast.error(`${error}`)
+        }
+    });
+    
+    const onChangeMedia = async (e: ChangeEvent<HTMLInputElement>) => {
+        handlePostMedia({
+            e,
+            callBack: (data) => {
+                handleUpdateProfile({ media_id: data[0].mediaId });
+                putProfileApi({media_id: data[0].mediaId });
+            },
+        });
+    };
 
     const handleStep2 = () => {
         refLeft?.current?.classList.add(style.profile_hidden_left);
@@ -82,57 +110,10 @@ export function ProfileLayout({ children }: LayoutProps) {
                                 <div className={style.profile_left_head}>
                                     <div className={style.profile_head_wrap}>
                                         <form action="#">
-                                            <label
-                                                style={{
-                                                    pointerEvents: "fill",
-                                                }}
-                                                htmlFor="file"
-                                            >
-                                                <div
-                                                    className={
-                                                        style.form_ava_box
-                                                    }
-                                                >
-                                                    <input
-                                                        autoComplete="off"
-                                                        type="file"
-                                                        id="file"
-                                                        name="file"
-                                                        hidden
-                                                        accept="image/jpeg,image/png,img/jpg"
-                                                    />
-                                                    <div
-                                                        className={
-                                                            style.form_ava
-                                                        }
-                                                    >
-                                                        <Avatar
-                                                            sx={{
-                                                                width: 128,
-                                                                height: 128,
-                                                            }}
-                                                            alt={
-                                                                profile
-                                                                    ?.attributes
-                                                                    ?.username
-                                                            }
-                                                            src="..."
-                                                        />
-                                                        <div
-                                                            className={
-                                                                style.form_edit
-                                                            }
-                                                        >
-                                                            <BsCameraFill
-                                                                style={{
-                                                                    color: "#fff",
-                                                                }}
-                                                                size={20}
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </label>
+                                            <ButtonUpload
+                                                onChange={onChangeMedia}
+                                                profile={profile}
+                                            />
                                         </form>
                                         <div className={style.form_name_box}>
                                             <p>
