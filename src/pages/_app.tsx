@@ -13,6 +13,8 @@ import "slick-carousel/slick/slick-theme.css";
 // import "react-loading-skeleton/dist/skeleton.css";
 import "@/styles/globals.css";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { createRef, FC, useEffect } from "react";
+import { InitLoaderPage, LoaderPage, LoaderPageHandle } from "@/components";
 const theme = createTheme({
     typography: {
         fontFamily: [
@@ -52,6 +54,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         <>
             <AppProvider>
                 <ToastContainer autoClose={1500} />
+                <RegisterGlobalContainer />
                 <QueryClientProvider client={queryClient}>
                     <ThemeProvider theme={theme}>
                         <Layout>
@@ -62,4 +65,16 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
             </AppProvider>
         </>
     );
+}
+
+const RegisterGlobalContainer: FC = () => {
+    const loaderPageRef = createRef<LoaderPageHandle>()
+    useEffect(() => {
+        InitLoaderPage.register(loaderPageRef)
+    }, [loaderPageRef])
+    return (
+        <>
+            <LoaderPage ref={loaderPageRef} />
+        </>
+    )
 }

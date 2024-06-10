@@ -66,7 +66,7 @@ export default function CourseInfo() {
 
     useEffect(() => {
         if (courseOrder && courseDetail) {
-            const isOrdered = courseOrder?.data.some((item: IOrderCourse) => {
+            const isOrdered = courseOrder?.data.some((item: any) => {
                 return item?.courses[0].id === courseDetail?.data?.id;
             });
             setCheckOrder(isOrdered);

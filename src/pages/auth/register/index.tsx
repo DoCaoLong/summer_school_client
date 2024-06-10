@@ -3,7 +3,6 @@ import { QR_KEY, QR_TIME_CACHE } from "@/constants";
 import { IKnown, IObjectUserApi } from "@/interfaces/index.type";
 import { SignLayout } from "@/layouts";
 import { authApi, knowApi } from "@/services";
-import { objectUserApi } from "@/services/objectUser.api";
 import { validate } from "@/utils";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
@@ -16,17 +15,13 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import style from "../style.module.css";
+import { useGetObjectUser } from "@/hooks";
 
 const RegisterPage: NextPageWithLayout = () => {
     const IS_MB = useMediaQuery("(max-width:767px)");
     const router = useRouter();
 
-    const { data: objectUsers } = useQuery({
-        queryKey: [QR_KEY.OBJECT_USER],
-        queryFn: () => objectUserApi.getObjectUser(),
-        staleTime: QR_TIME_CACHE,
-    });
-    const dataObjectUser = objectUsers?.data || [];
+    const {dataObjectUser} = useGetObjectUser()
 
     const { data: know } = useQuery({
         queryKey: [QR_KEY.KNOW],

@@ -30,7 +30,7 @@ const History: NextPageWithLayout = () => {
                 <div className={style.edit_profile_body}>
                     <div className={style.profile_his_list}>
                         {dataCourseOrder.length !== 0 ? (
-                            dataCourseOrder?.map((item: IOrderCourse) => (
+                            dataCourseOrder?.map((item: any) => (
                                 <Link
                                     href={`/khoa-hoc/${item?.courses[0]?.id}`}
                                     key={item?.id}

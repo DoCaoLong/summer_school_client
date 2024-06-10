@@ -9,4 +9,6 @@ export type IProfileState = {
     logoutProfile: () => Promise<void>;
     putProfile: (newProfile: IUser) => void;
     putProfileApi: (newProfile: IReqProfile) => void;
+    updateProfileAvatar: (payload: { media_id: number, url: string }) => void;
+    updateProfileForm:(payload:IReqProfile) => void
 };

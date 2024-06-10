@@ -4,3 +4,4 @@ export * from "./courseItem";
 export * from "./card";
 export * from "./footer";
 export * from "./buttonUpload";
+export * from "./LoaderPage/LoaderPage"

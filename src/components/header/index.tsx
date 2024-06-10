@@ -10,6 +10,7 @@ import { ICourse } from "@/interfaces/course.type";
 import { useProfileStore } from "@/store/zustand";
 import { IProfileState } from "@/store/zustand/type";
 import { useLogout } from "@/hooks";
+import { generateImageUrl } from "@/utils";
 
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -39,7 +40,7 @@ export default function Header() {
 
         setIsHomePage(
             window.location.pathname === "/" ||
-                window.location.pathname.split("/")[1] === "khoa-hoc"
+            window.location.pathname.split("/")[1] === "khoa-hoc"
         );
 
         return () => {
@@ -49,11 +50,10 @@ export default function Header() {
 
     return (
         <div
-            className={`${style.header} ${style.container_fluid} ${
-                isHomePage && isScrolled
+            className={`${style.header} ${style.container_fluid} ${isHomePage && isScrolled
                     ? style.scrolled
                     : !isHomePage && style.scrolled
-            }`}
+                }`}
         >
             <div className={style.header_left}>
                 <div
@@ -87,7 +87,7 @@ export default function Header() {
                             width: IS_MB ? 30 : 36,
                             height: IS_MB ? 30 : 36,
                         }}
-                        src="..."
+                        src={generateImageUrl(profile.attributes.avatar?.url)}
                     ></Avatar>
                     <p className={style.header_username}>
                         {profile?.attributes?.username}

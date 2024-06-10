@@ -1,5 +1,5 @@
 import { LayoutProps } from "@/common";
-import { ButtonUpload } from "@/components";
+import { ButtonUpload, InitLoaderPage } from "@/components";
 import { QR_KEY } from "@/constants";
 import { usePostMedia } from "@/hooks";
 import { useLogout } from "@/hooks/useLogout";
@@ -48,32 +48,28 @@ export function ProfileLayout({ children }: LayoutProps) {
         .split("/")
         .filter((item) => Boolean(item));
     const IS_MB = useMediaQuery("(max-width:767px)");
-    const [profile, putProfileApi] = useProfileStore((state: IProfileState) => [
+    const [profile, putProfileApi, updateProfileAvatar] = useProfileStore((state: IProfileState) => [
         state.profile,
         state.putProfileApi,
+        state.updateProfileAvatar
     ]);
     const refLeft = useRef<HTMLDivElement>(null);
     const refRight = useRef<HTMLDivElement>(null);
     const onLogout = useLogout();
-
-    const { mutate: handleUpdateProfile } = useMutation({
-        mutationKey: [QR_KEY.PUT_PROFILE],
-        mutationFn: (body: IReqProfile) => profileApi.putProfile(body),
-        onSuccess: (res: IUser) => {
-            console.log(res)
-            toast.success("Thay đổi thành công");
-        },
-        onError: (error) => {
-            toast.error(`${error}`)
-        }
-    });
     
     const onChangeMedia = async (e: ChangeEvent<HTMLInputElement>) => {
+        InitLoaderPage.onLoading()
         handlePostMedia({
             e,
             callBack: (data) => {
-                handleUpdateProfile({ media_id: data[0].mediaId });
-                putProfileApi({media_id: data[0].mediaId });
+                if(data.length > 0){
+                    updateProfileAvatar({
+                        media_id:data[0].mediaId,
+                        url:data[0].original_url
+                    })
+                }
+                // handleUpdateProfile({ media_id: data[0].mediaId });
+                // putProfileApi({media_id: data[0].mediaId });
             },
         });
     };

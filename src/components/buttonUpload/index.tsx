@@ -19,6 +19,7 @@ export const ButtonUpload = (props: ButtonUploadProps) => {
     const baseUrl = process.env.NEXT_PUBLIC_URL;
     const change = (e: ChangeEvent<HTMLInputElement>) =>
         onChange && onChange(e);
+    console.log(profile)
     return (
         <>
             <label
