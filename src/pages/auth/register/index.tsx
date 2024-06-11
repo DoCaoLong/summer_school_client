@@ -94,7 +94,7 @@ const RegisterPage: NextPageWithLayout = () => {
             toast.success("Đăng ký thành công");
             setTimeout(() => {
                 router.push("/auth/login");
-            }, 3000);
+            }, 1000);
         },
         onError: (error) => {
             const err = error as AxiosError<any>;

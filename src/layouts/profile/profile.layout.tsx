@@ -152,7 +152,10 @@ export function ProfileLayout({ children }: LayoutProps) {
                                         </Link>
                                     ))}
 
-                                    <div className={style.profile_left_tabItem}>
+                                    <div
+                                        onClick={onLogout}
+                                        className={style.profile_left_tabItem}
+                                    >
                                         <div className={style.tabItem_title}>
                                             <BiLogOut
                                                 style={{
@@ -160,9 +163,7 @@ export function ProfileLayout({ children }: LayoutProps) {
                                                 }}
                                                 size={20}
                                             />
-                                            <span onClick={onLogout}>
-                                                Đăng xuất
-                                            </span>
+                                            <span>Đăng xuất</span>
                                         </div>
                                         <div></div>
                                     </div>

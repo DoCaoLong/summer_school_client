@@ -4,7 +4,9 @@ const nextConfig = {
     images: {
         domains: [
             "source.unsplash.com",
-            "cdn.sanity.io",
+            "localhost:1337",
+            "localhost",
+            "localhost:3000",
             "summerschool.fashional.pro",
         ],
     },

@@ -18,7 +18,6 @@ const Blog: NextPageWithLayout = () => {
         populate: "*",
     };
     const router = useRouter();
-    const patchName = router.pathname;
 
     const { data: blog } = useQuery({
         queryKey: [QR_KEY.BLOG],
@@ -26,6 +25,7 @@ const Blog: NextPageWithLayout = () => {
         staleTime: QR_TIME_CACHE,
     });
     const dataBlog = blog?.data ?? [];
+    console.log(dataBlog)
     return (
         <>
             <Seo
@@ -54,8 +54,7 @@ const Blog: NextPageWithLayout = () => {
                                             height: "100%",
                                         }}
                                         src={`${baseUrl}${
-                                            item?.attributes?.thumbnail?.data
-                                                ?.attributes?.url ?? ""
+                                            item?.attributes?.thumbnail?.data?.attributes?.url
                                         }
                                     `}
                                         alt={
