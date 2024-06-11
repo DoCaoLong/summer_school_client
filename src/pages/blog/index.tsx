@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import { Seo } from "@/components";
 import { useRouter } from "next/router";
+import { imgs } from "@/assets/imgs";
 
 const Blog: NextPageWithLayout = () => {
     const baseUrl = process.env.NEXT_PUBLIC_URL;
@@ -44,7 +45,7 @@ const Blog: NextPageWithLayout = () => {
                                 className={style.blog_item}
                             >
                                 <div className={style.blog_item_left}>
-                                    <Image
+                                    {/* <Image
                                         fetchPriority="high"
                                         width={0}
                                         height={0}
@@ -54,7 +55,8 @@ const Blog: NextPageWithLayout = () => {
                                             height: "100%",
                                         }}
                                         src={`${baseUrl}${
-                                            item?.attributes?.thumbnail?.data?.attributes?.url
+                                            item?.attributes?.thumbnail?.data
+                                                ?.attributes?.url ?? ""
                                         }
                                     `}
                                         alt={
@@ -62,8 +64,17 @@ const Blog: NextPageWithLayout = () => {
                                                 ?.attributes?.name ?? ""
                                         }
                                         priority={true}
+                                    /> */}
+                                    <img
+                                        src={`${baseUrl}${
+                                            item?.attributes?.thumbnail?.data
+                                                ?.attributes?.url ?? ""
+                                        }
+                                    `}
+                                        alt=""
                                     />
                                 </div>
+                                
                                 <div className={style.blog_item_right}>
                                     <h2 className={style.blog_item_name}>
                                         {item?.attributes?.title}

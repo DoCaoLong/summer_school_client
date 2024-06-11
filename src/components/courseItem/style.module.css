@@ -5,7 +5,7 @@
     gap: 24px;
     cursor: pointer;
     background-color: var(--white);
-    border-radius: 16px;
+    /* border-radius: 16px; */
     overflow: hidden;
 }
 .course_item_left {

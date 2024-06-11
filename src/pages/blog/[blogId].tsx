@@ -54,7 +54,7 @@ const Blog: NextPageWithLayout = () => {
                             "DD-MM-YYYY"
                         )}
                     </p>
-                    <Image
+                    {/* <Image
                         fetchPriority="high"
                         width={0}
                         height={0}
@@ -73,6 +73,17 @@ const Blog: NextPageWithLayout = () => {
                                 ?.attributes?.name ?? "image-thumnail"
                         }
                         priority={true}
+                    /> */}
+                    <img
+                        src={`${baseUrl}${
+                            blogDetail?.data?.attributes?.thumbnail?.data
+                                ?.attributes?.url ?? ""
+                        }
+                                    `}
+                        alt={
+                            blogDetail?.data?.attributes?.thumbnail?.data
+                                ?.attributes?.name ?? "image-thumnail"
+                        }
                     />
                     <div
                         dangerouslySetInnerHTML={{

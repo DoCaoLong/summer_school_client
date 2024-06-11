@@ -60,7 +60,7 @@ export default function HomeCourse() {
                             <Link href={`/khoa-hoc/${item?.id}`} key={index}>
                                 <div className={style.course_slider_item}>
                                     <div className={style.course_left}>
-                                        <Image
+                                        {/* <Image
                                             fetchPriority="high"
                                             width={0}
                                             height={0}
@@ -78,6 +78,16 @@ export default function HomeCourse() {
                                                     ?.attributes?.name ?? ""
                                             }
                                             priority={true}
+                                        /> */}
+                                        <img
+                                            src={`${baseUrl}${
+                                                item?.attributes?.image?.data
+                                                    ?.attributes?.url ?? ""
+                                            }`}
+                                            alt={
+                                                item?.attributes?.image?.data
+                                                    ?.attributes?.name ?? ""
+                                            }
                                         />
                                     </div>
                                     <div className={style.course_right}>

@@ -37,7 +37,7 @@ const History: NextPageWithLayout = () => {
                                     className={style.profile_his_item}
                                 >
                                     <div className={style.his_item_img}>
-                                        <Image
+                                        {/* <Image
                                             fetchPriority="high"
                                             width={0}
                                             height={0}
@@ -55,6 +55,16 @@ const History: NextPageWithLayout = () => {
                                                 ""
                                             }
                                             priority={true}
+                                        /> */}
+                                        <img
+                                            src={`${baseUrl}${
+                                                item?.courses[0]?.image?.url ??
+                                                ""
+                                            }`}
+                                            alt={
+                                                item?.courses[0]?.image?.name ??
+                                                ""
+                                            }
                                         />
                                     </div>
                                     <div className={style.his_content}>

@@ -17,7 +17,7 @@ export default function CourseItem(props: IProps) {
             className={style.course_item}
         >
             <div className={style.course_item_left}>
-                <Image
+                {/* <Image
                     fetchPriority="high"
                     width={0}
                     height={0}
@@ -33,6 +33,14 @@ export default function CourseItem(props: IProps) {
                     }
                     alt={`${item?.image?.data?.attributes?.name ?? ""}`}
                     priority={true}
+                /> */}
+                <img
+                    src={
+                        item
+                            ? `${baseUrl}${item?.image?.data?.attributes?.url}`
+                            : ""
+                    }
+                    alt={`${item?.image?.data?.attributes?.name ?? ""}`}
                 />
             </div>
             <div className={style.course_item_right}>

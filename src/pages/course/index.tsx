@@ -51,7 +51,7 @@ const Course: NextPageWithLayout = () => {
                             className={style.course_item}
                         >
                             <div className={style.course_item_left}>
-                                <Image
+                                {/* <Image
                                     fetchPriority="high"
                                     width={0}
                                     height={0}
@@ -69,6 +69,16 @@ const Course: NextPageWithLayout = () => {
                                             ?.attributes?.name ?? ""
                                     }`}
                                     priority={true}
+                                /> */}
+                                <img
+                                    src={`${baseUrl}${
+                                        item?.attributes?.image?.data
+                                            ?.attributes?.url ?? ""
+                                    }`}
+                                    alt={`${
+                                        item?.attributes?.image?.data
+                                            ?.attributes?.name ?? ""
+                                    }`}
                                 />
                             </div>
                             <div className={style.course_item_right}>
@@ -85,9 +95,9 @@ const Course: NextPageWithLayout = () => {
                                                     item?.attributes?.teacher
                                                         ?.data?.attributes
                                                         ?.avatar?.data
-                                                        ?.attributes?.name
+                                                        ?.attributes?.name ?? "img-author"
                                                 }
-                                                src={`${baseUrl}${item?.attributes?.teacher?.data?.attributes?.avatar?.data?.attributes?.url}`}
+                                                src={`${baseUrl}${item?.attributes?.teacher?.data?.attributes?.avatar?.data?.attributes?.url ?? ""}`}
                                                 sx={{
                                                     width: 36,
                                                     height: 36,

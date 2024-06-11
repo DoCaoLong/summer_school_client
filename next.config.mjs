@@ -7,6 +7,8 @@ const nextConfig = {
             "localhost:1337",
             "localhost",
             "localhost:3000",
+            "127.0.0.1",
+            "127.0.0.1:1337",
             "summerschool.fashional.pro",
         ],
     },
