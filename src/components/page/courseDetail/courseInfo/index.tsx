@@ -1,5 +1,12 @@
+import { queryClient } from "@/configs";
 import { QR_KEY, QR_TIME_CACHE } from "@/constants";
+import { ICourse } from "@/interfaces/course.type";
+import { IResponseList } from "@/interfaces/res.type";
 import { courseApi } from "@/services";
+import { useProfileStore } from "@/store/zustand";
+import { IProfileState } from "@/store/zustand/type";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoadingButton } from "@mui/lab";
 import {
     Button,
     Container,
@@ -8,22 +15,15 @@ import {
     TextField,
 } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import dayjs from "dayjs";
-import { useRouter } from "next/router";
-import { toast } from "react-toastify";
-import style from "./style.module.css";
-import { useState, useEffect } from "react";
-import * as Yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Controller, useForm } from "react-hook-form";
-import { LoadingButton } from "@mui/lab";
 import { AxiosError } from "axios";
-import { ICourse } from "@/interfaces/course.type";
-import { IResponseList } from "@/interfaces/res.type";
-import { useProfileStore } from "@/store/zustand";
-import { IProfileState } from "@/store/zustand/type";
-import { IOrderCourse } from "@/interfaces/orderCourse.type";
-import { queryClient } from "@/configs";
+import dayjs from "dayjs";
+import markdownit from "markdown-it";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import * as Yup from "yup";
+import style from "./style.module.css";
 
 export default function CourseInfo() {
     const router = useRouter();
@@ -34,6 +34,11 @@ export default function CourseInfo() {
     const [profile] = useProfileStore((state: IProfileState) => [
         state.profile,
     ]);
+    const md = markdownit({
+        html: true,
+        linkify: true,
+        typographer: true,
+    });
     function handleClose() {
         setOpen(false);
     }
@@ -67,7 +72,7 @@ export default function CourseInfo() {
     useEffect(() => {
         if (courseOrder && courseDetail) {
             const isOrdered = courseOrder?.data.some((item: any) => {
-                return item?.courses[0].id === courseDetail?.data?.id;
+                return item?.courses[0]?.id === courseDetail?.data?.id;
             });
             setCheckOrder(isOrdered);
         }
@@ -79,7 +84,14 @@ export default function CourseInfo() {
 
     const imgCourse =
         courseDetail?.data?.attributes?.image?.data?.attributes?.url;
+    const currentDate = dayjs();
 
+    const endDate = dayjs(
+        courseDetail && courseDetail.data.attributes.endDate,
+        "YYYY-MM-DD"
+    );
+    const isCourseExpired = currentDate.isAfter(endDate);
+    const isCourseActive = courseDetail && courseDetail.data.attributes.active;
     const backgroundImageStyle = {
         backgroundImage: `url(${
             imgCourse
@@ -124,28 +136,50 @@ export default function CourseInfo() {
                                 </p>
                             </div>
                         </div>
-                        <Button
-                            disabled={checkOrder}
-                            size="large"
-                            variant="contained"
-                            color="secondary"
-                            onClick={
-                                profile
-                                    ? () => setOpen(true)
-                                    : () => router.push("/auth/login")
-                            }
-                        >
-                            {checkOrder ? "Đã đăng ký" : "Đăng ký ngay"}
-                        </Button>
+
+                        {isCourseExpired || !isCourseActive ? (
+                            <Button
+                                disabled={isCourseExpired || !isCourseActive}
+                                size="large"
+                                variant="contained"
+                                color="primary"
+                            >
+                                {isCourseExpired && "Hết hạn đăng ký"}{" "}
+                                {!isCourseActive && "Khóa học đang tạm đóng"}
+                            </Button>
+                        ) : (
+                            <Button
+                                disabled={checkOrder}
+                                size="large"
+                                variant="contained"
+                                color="secondary"
+                                onClick={
+                                    profile
+                                        ? () => setOpen(true)
+                                        : () => router.push("/auth/login")
+                                }
+                            >
+                                {checkOrder ? "Đã đăng ký" : "Đăng ký ngay"}
+                            </Button>
+                        )}
                     </div>
                 </div>
             </div>
             <div className={style.course_info_botom}>
                 <Container maxWidth="md">
                     <p className={style.course_info_title}>Mô tả khóa học</p>
-                    <p className={style.course_info_desc}>
-                        {courseDetail?.data?.attributes?.content}
-                    </p>
+                    <div
+                        className={style.course_info_desc}
+                        dangerouslySetInnerHTML={{
+                            __html:
+                                md.render(
+                                    `${
+                                        courseDetail?.data?.attributes
+                                            ?.content ?? "<p>Đang cập nhật</p>"
+                                    }`
+                                ) || "",
+                        }}
+                    />
                 </Container>
             </div>
             {courseDetail && (

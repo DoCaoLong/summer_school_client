@@ -1,5 +1,4 @@
 @import "../assets/fonts/stylesheet.css";
-/* @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"); */
 :root {
     --primary-cl: #000b19;
     --secondary-cl: #00afab;
@@ -62,9 +61,35 @@ ul,
 li {
     list-style: none;
 }
+h1{
+    font-size: 2rem;
+}
+h2{
+    font-size: 1.5rem;
+}
+h3{
+    font-size: 1.17rem;
+}
+h4{
+    font-size: 1rem;
+}
+h5{
+    font-size: 0.83rem;
+}
+h6{
+    font-size: 0.67rem;
+}
+strong{
+    font-weight: bold;
+    font-size: inherit;
+}
+i{
+    font-style: italic;
+}
+u{
+    text-decoration: underline;
+}
 body {
-    /* min-height: 100vh; */
-    /* font-family: "Poppins", sans-serif; */
     height: 100%;
     min-height: 100vh;
     font-weight: 500;

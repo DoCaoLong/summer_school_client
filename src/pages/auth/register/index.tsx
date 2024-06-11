@@ -87,7 +87,7 @@ const RegisterPage: NextPageWithLayout = () => {
         // console.log("data :>> ", data);
     };
 
-    const { mutate } = useMutation({
+    const { mutate, status } = useMutation({
         mutationFn: (body: any) => authApi.register(body),
         onSuccess: async () => {
             reset();
@@ -259,7 +259,7 @@ const RegisterPage: NextPageWithLayout = () => {
                                         fontWeight: "bold",
                                         margin: "14px 0",
                                     }}
-                                    // loading={isLoading}
+                                    loading={status == "pending"}
                                     variant="contained"
                                 >
                                     Đăng ký

@@ -14,6 +14,7 @@ export interface ICourse {
         content: string | null;
         image: IImage;
         teacher: ITeacher;
+        endDate: string | null
     };
 }
 export interface ICourseDetail {
@@ -29,6 +30,7 @@ export interface ICourseDetail {
     content: string | null;
     image: IImage;
     teacher: ITeacher;
+    endDate: string | null
 }
 
 export interface IImage {

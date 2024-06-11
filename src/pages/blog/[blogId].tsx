@@ -9,6 +9,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import style from "./style.module.css";
 import { Seo } from "@/components";
+import markdownit from "markdown-it";
+
 
 const Blog: NextPageWithLayout = () => {
     const router = useRouter();
@@ -18,6 +20,11 @@ const Blog: NextPageWithLayout = () => {
     const params: any = {
         populate: "*",
     };
+     const md = markdownit({
+         html: true,
+         linkify: true,
+         typographer: true,
+     });
     const { data: blogDetail } = useQuery({
         queryKey: [QR_KEY.BLOG_DETAIL, idBlog],
         enabled: !!idBlog,
@@ -67,9 +74,18 @@ const Blog: NextPageWithLayout = () => {
                         }
                         priority={true}
                     />
-                    <p className={style.blogDetailDesc}>
-                        {blogDetail?.data?.attributes?.content}
-                    </p>
+                    <div
+                        dangerouslySetInnerHTML={{
+                            __html:
+                                md.render(
+                                    `${
+                                        blogDetail?.data?.attributes?.content ??
+                                        "<p>Đang cập nhật</p>"
+                                    }`
+                                ) || "",
+                        }}
+                        className={style.blogDetailDesc}
+                    />
                 </div>
             </Container>
         </>

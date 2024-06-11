@@ -24,6 +24,7 @@ interface Course {
     numberOfSessions: string;
     image: IAvatar;
     teacher: Teacher;
+    endDate: string | null
 }
 
 export interface IOrderCourse {

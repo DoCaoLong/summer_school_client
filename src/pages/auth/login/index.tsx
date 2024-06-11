@@ -48,7 +48,7 @@ const LoginPage: NextPageWithLayout = () => {
         //   }),
     });
 
-    const { mutate } = useMutation({
+    const { mutate , status } = useMutation({
         mutationFn: (data: ILogin) => authApi.login(data),
         onSuccess: async (res: AuthResponse) => {
             localStorage.setItem("accessToken", res.jwt);
@@ -140,7 +140,7 @@ const LoginPage: NextPageWithLayout = () => {
                                         borderRadius: "8px",
                                     }}
                                     fullWidth
-                                    // loading={isLoading}
+                                    loading={status == "pending"}
                                     variant="contained"
                                 >
                                     Đăng nhập
