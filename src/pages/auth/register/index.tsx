@@ -29,7 +29,7 @@ const RegisterPage: NextPageWithLayout = () => {
         staleTime: QR_TIME_CACHE,
     });
     const dataKnow = know?.data || [];
-    console.log(dataKnow);
+    // console.log(dataKnow);
 
     const validationSchema = Yup.object({
         username: Yup.string().required("Vui lòng nhập họ và tên"),
@@ -98,7 +98,7 @@ const RegisterPage: NextPageWithLayout = () => {
         },
         onError: (error) => {
             const err = error as AxiosError<any>;
-            console.log();
+            // console.log();
             if (
                 err?.response?.data?.error?.message ==
                 "This attribute must be unique"
@@ -127,7 +127,7 @@ const RegisterPage: NextPageWithLayout = () => {
                                             required: true,
                                         })}
                                         type="text"
-                                        placeholder="Họ và tên"
+                                        placeholder="Tên đăng nhập"
                                         className={style.input}
                                     />
                                     {errors.username && (

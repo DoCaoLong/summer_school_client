@@ -26,7 +26,7 @@ import style from "./style.module.css";
 
 interface FormData {
     fullName: string;
-    username: string;
+    // username: string;
     email: string;
     dateOfBirth: string;
     objectUser: number;
@@ -61,7 +61,7 @@ const FormProfile: FC<{ profile: IUser }> = ({ profile }) => {
     ]);
     const validationSchema = Yup.object().shape({
         fullName: Yup.string().required("Họ và tên không được bỏ trống"),
-        username: Yup.string().required("Username không được bỏ trống"),
+        // username: Yup.string().required("Username không được bỏ trống"),
         email: Yup.string()
             .email("Sai định dạng example@gmail.com")
             .required("Email không được để trống"),
@@ -76,8 +76,9 @@ const FormProfile: FC<{ profile: IUser }> = ({ profile }) => {
     } = useForm<FormData>({
         resolver: yupResolver(validationSchema),
         defaultValues: {
-            fullName: profile.attributes.fullName,
-            username: profile.attributes.username,
+            // username: profile.attributes.username,
+            fullName:
+                profile.attributes.fullName ?? profile.attributes.username,
             email: profile?.attributes?.email ?? "",
             dateOfBirth: profile.attributes.dateOfBirth
                 ? dayjs(profile.attributes.dateOfBirth).format("YYYY-MM-DD")
@@ -88,7 +89,7 @@ const FormProfile: FC<{ profile: IUser }> = ({ profile }) => {
     const onSubmit = (values: FormData) => {
         updateProfileForm({
             fullName: values.fullName,
-            username: values.username,
+            // username: values.username,
             email: values.email,
             dateOfBirth: dayjs(values.dateOfBirth).isValid()
                 ? dayjs(values.dateOfBirth).format("YYYY-MM-DD")

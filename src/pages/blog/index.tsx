@@ -26,7 +26,7 @@ const Blog: NextPageWithLayout = () => {
         staleTime: QR_TIME_CACHE,
     });
     const dataBlog = blog?.data ?? [];
-    console.log(dataBlog)
+    // console.log(dataBlog)
     return (
         <>
             <Seo
@@ -74,7 +74,7 @@ const Blog: NextPageWithLayout = () => {
                                         alt=""
                                     />
                                 </div>
-                                
+
                                 <div className={style.blog_item_right}>
                                     <h2 className={style.blog_item_name}>
                                         {item?.attributes?.title}

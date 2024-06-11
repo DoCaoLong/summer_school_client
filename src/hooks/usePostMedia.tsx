@@ -31,7 +31,7 @@ export function usePostMedia() {
                             original_url: res[0]?.url,
                             mediaId: res[0]?.id
                         };
-                        console.log("media", res)
+                        // console.log("media", res)
                     }
                     mediaList.push(resMedia);
                 }

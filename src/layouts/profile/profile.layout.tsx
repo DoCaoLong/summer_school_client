@@ -113,7 +113,7 @@ export function ProfileLayout({ children }: LayoutProps) {
                                         </form>
                                         <div className={style.form_name_box}>
                                             <p>
-                                                {profile?.attributes?.username}
+                                                {profile?.attributes?.fullName ?? profile?.attributes?.username}
                                             </p>
                                         </div>
                                     </div>
