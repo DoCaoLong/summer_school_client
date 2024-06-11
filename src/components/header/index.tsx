@@ -50,10 +50,11 @@ export default function Header() {
 
     return (
         <div
-            className={`${style.header} ${style.container_fluid} ${isHomePage && isScrolled
+            className={`${style.header} ${style.container_fluid} ${
+                isHomePage && isScrolled
                     ? style.scrolled
                     : !isHomePage && style.scrolled
-                }`}
+            }`}
         >
             <div className={style.header_left}>
                 <div
@@ -81,7 +82,10 @@ export default function Header() {
                     className={style.header_btn_login}
                 >
                     <Avatar
-                        alt={profile?.attributes?.username}
+                        alt={
+                            profile?.attributes?.fullName ??
+                            profile?.attributes?.username
+                        }
                         sx={{
                             backgroundColor: "var(--secondary-cl)",
                             width: IS_MB ? 30 : 36,
@@ -90,7 +94,8 @@ export default function Header() {
                         src={generateImageUrl(profile.attributes.avatar?.url)}
                     ></Avatar>
                     <p className={style.header_username}>
-                        {profile?.attributes?.username}
+                        {profile?.attributes?.fullName ??
+                            profile?.attributes?.username}
                     </p>
                 </Link>
             )}

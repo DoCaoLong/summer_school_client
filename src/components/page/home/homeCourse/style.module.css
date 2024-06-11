@@ -40,15 +40,16 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
-    padding: 24px;
+    padding: 48px;
     align-items: flex-start;
+    width: 100%;
 }
 .course_txt {
     font-size: 18px;
     font-weight: bold;
 }
 .course_name {
-    font-size: 40px;
+    font-size: 32px;
     font-weight: bold;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -70,7 +71,7 @@
 }
 .course_time {
     color: var(--text-gray);
-    font-size: 36px;
+    font-size: 26px;
     font-weight: bold;
 }
 .course_item {
@@ -145,6 +146,9 @@
     margin-top: 24px;
 }
 @media screen and (max-width: 767.98px) {
+    .course{
+        margin-top: 24px;
+    }
     .course_item .course_name {
         height: auto;
     }
@@ -183,7 +187,6 @@
     }
     .course_title {
         line-height: 1;
-        margin-bottom: 14px;
     }
     .course_right button {
         margin-left: auto;

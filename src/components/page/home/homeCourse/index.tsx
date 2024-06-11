@@ -17,6 +17,7 @@ export default function HomeCourse() {
     const slider = React.useRef<any>(null);
     const baseUrl = process.env.NEXT_PUBLIC_URL;
     const settings: any = {
+        arrows: false,
         dots: false,
         infinite: true,
         speed: 500,
@@ -135,7 +136,6 @@ export default function HomeCourse() {
                                             size="large"
                                             variant="contained"
                                             color="secondary"
-                                            // onClick={handleAgree}
                                         >
                                             Xem chi tiết
                                         </Button>
